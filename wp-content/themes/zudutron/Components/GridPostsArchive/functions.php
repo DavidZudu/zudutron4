@@ -12,17 +12,60 @@ const FILTER_BY_TAXONOMY = 'category';
 add_filter('Flynt/addComponentData?name=GridPostsArchive', function ($data) {
     $data['uuid'] = $data['uuid'] ?? wp_generate_uuid4();
     $postType = POST_TYPE;
-    $taxonomy = FILTER_BY_TAXONOMY;
+    $taxonomy = FILTER_BY_TAXONOMY;    
+
+    /// IF NOT ARCHIVE
+    /// gets postType and Taxonomy from Custom Field instead
+    if (!is_archive()) {
+        $postType = isset($data['postTypeSelect'])
+            ? $data['postTypeSelect']
+            : POST_TYPE;
+        $data['posts'] = Timber::get_posts([
+            // Get post type project
+            'post_type' => $postType,
+            // Get all posts
+            'posts_per_page' => -1,
+            // Order by post date
+            'orderby' => [
+                'date' => 'DESC',
+            ],
+        ]);    
+        switch ($postType) {
+                case 'post':
+                    $taxonomy = 'category';
+                    break;
+                case 'article':
+                    $taxonomy = 'topic';
+                    break;
+                default:
+                    $taxonomy = 'category';
+            }    
+    }    
+    //////////////////
+
+    $queriedObject = get_queried_object();
+
     $terms = get_terms([
         'taxonomy' => $taxonomy,
         'hide_empty' => true,
     ]);
-    $queriedObject = get_queried_object();
+
+    /// IF TAXONOMY PAGE ARCHIVE
+    if (is_tax()){
+        $terms = get_terms([
+            'taxonomy' => get_queried_object()->taxonomy,
+            'hide_empty' => true,
+        ]);
+        $postType = get_taxonomy($queriedObject->taxonomy)->object_type[0];
+    }   
+
     if (count($terms) > 1) {
         $data['terms'] = array_map(function ($term) use ($queriedObject) {
             $timberTerm = Timber::get_term($term);
             if ($queriedObject->taxonomy ?? null) {
-                $timberTerm->isActive = $queriedObject->taxonomy === $term->taxonomy && $queriedObject->term_id === $term->term_id;
+                $timberTerm->isActive =
+                    $queriedObject->taxonomy === $term->taxonomy &&
+                    $queriedObject->term_id === $term->term_id;
             }
             return $timberTerm;
         }, $terms);
@@ -38,12 +81,31 @@ add_filter('Flynt/addComponentData?name=GridPostsArchive', function ($data) {
         $data['isHome'] = true;
         $data['title'] = $queriedObject->post_title ?? get_bloginfo('name');
     } else {
-        $data['title'] =  get_the_archive_title();
+        $data['title'] = get_the_archive_title();
         $data['description'] = get_the_archive_description();
     }
 
     return $data;
 });
+
+function getACFLayout()
+{
+    return [
+        'name' => 'gridPostsArchive',
+        'label' => __('Grid: Posts Archive', 'flynt'),
+        'sub_fields' => [
+            [
+                'label' => __('Post Type', 'flynt'),
+                'name' => 'postTypeSelect',
+                'type' => 'select',
+                // Populated dynamically in ../../inc/populateFields.php
+                'wrapper' => [
+                    'width' => '50',
+                ],
+            ],
+        ],
+    ];
+}
 
 Options::addGlobal('GridPostsArchive', [
     [
@@ -51,7 +113,7 @@ Options::addGlobal('GridPostsArchive', [
         'name' => 'loadMore',
         'type' => 'true_false',
         'default_value' => 0,
-        'ui' => 1
+        'ui' => 1,
     ],
 ]);
 
@@ -65,7 +127,10 @@ Options::addTranslatable('GridPostsArchive', [
     ],
     [
         'label' => __('Title', 'flynt'),
-        'instructions' => __('Want to add a headline? And a paragraph? Go ahead! Or just leave it empty and nothing will be shown.', 'flynt'),
+        'instructions' => __(
+            'Want to add a headline? And a paragraph? Go ahead! Or just leave it empty and nothing will be shown.',
+            'flynt'
+        ),
         'name' => 'preContentHtml',
         'type' => 'wysiwyg',
         'tabs' => 'visual,text',
@@ -77,7 +142,7 @@ Options::addTranslatable('GridPostsArchive', [
         'name' => 'labelsTab',
         'type' => 'tab',
         'placement' => 'top',
-        'endpoint' => 0
+        'endpoint' => 0,
     ],
     [
         'label' => '',
@@ -146,13 +211,16 @@ Options::addTranslatable('GridPostsArchive', [
             ],
             [
                 'label' => __('Reading Time - (20) min read', 'flynt'),
-                'instructions' => __('%d is placeholder for number of minutes', 'flynt'),
+                'instructions' => __(
+                    '%d is placeholder for number of minutes',
+                    'flynt'
+                ),
                 'name' => 'readingTime',
                 'type' => 'text',
                 'default_value' => __('%d min read', 'flynt'),
                 'required' => 1,
                 'wrapper' => [
-                    'width' => 50
+                    'width' => 50,
                 ],
             ],
             [
@@ -164,7 +232,7 @@ Options::addTranslatable('GridPostsArchive', [
                 'wrapper' => [
                     'width' => '50',
                 ],
-            ]
+            ],
         ],
     ],
     [
@@ -172,15 +240,13 @@ Options::addTranslatable('GridPostsArchive', [
         'name' => 'optionsTab',
         'type' => 'tab',
         'placement' => 'top',
-        'endpoint' => 0
+        'endpoint' => 0,
     ],
     [
         'label' => '',
         'name' => 'options',
         'type' => 'group',
         'layout' => 'row',
-        'sub_fields' => [
-            FieldVariables\getTheme()
-        ]
+        'sub_fields' => [FieldVariables\getTheme()],
     ],
 ]);

@@ -56,6 +56,10 @@ add_action('init', function () {
         'exclude_from_search'   => false,
         'publicly_queryable'    => true,
         'capability_type'       => 'page',
+        'rewrite'            => array( 'slug' => get_post(get_option( 'page_for_articles' ))->post_name),
     ];
     register_post_type('article', $args);
+});
+add_action('admin_init', function() {
+add_settings_field('mytheme_reference_slug', __('References base', 'txtdomain'), 'mytest_reference_slug_output', 'permalink', 'optional');
 });
