@@ -5,7 +5,7 @@ import globImporter from 'node-sass-glob-importer'
 import FullReload from 'vite-plugin-full-reload'
 import fs from 'fs'
 
-const wordpressHost = 'http://localhost:3000'
+const wordpressHost = 'http://localhost/zudutron4'
 
 const dest = './dist'
 const entries = [
@@ -27,7 +27,7 @@ const watchFiles = [
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   const host = env.VITE_DEV_SERVER_HOST || wordpressHost
-  const isSecure = host.indexOf('https://') === 0 && (env.VITE_DEV_SERVER_KEY || env.VITE_DEV_SERVER_CERT)
+  const isSecure = host.indexOf('https://') !== 0 && (env.VITE_DEV_SERVER_KEY || env.VITE_DEV_SERVER_CERT)
 
   return {
     base: './',
