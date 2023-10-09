@@ -1,0 +1,9 @@
+/* .show-hidden-items #adminmenuwrap {
+    background:red!important;
+} */
+.hidden-item {
+    display:none;
+}
+.show-hidden-items .hidden-item {
+    display:list-item;
+}
