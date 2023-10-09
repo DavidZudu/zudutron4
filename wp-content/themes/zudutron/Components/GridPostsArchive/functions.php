@@ -13,6 +13,10 @@ add_filter('Flynt/addComponentData?name=GridPostsArchive', function ($data) {
     $data['uuid'] = $data['uuid'] ?? wp_generate_uuid4();
     $postType = POST_TYPE;
     $taxonomy = FILTER_BY_TAXONOMY;    
+    $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+    $ppp = get_option( 'posts_per_page' ) ? get_option( 'posts_per_page' ) : 12;    
+    $orderby = isset($data['options']['orderBy']) ? $data['options']['orderBy'] : 'date';
+    $order = isset($data['options']['order']) ? $data['options']['order'] : 'DESC';  
 
     /// IF NOT ARCHIVE
     /// gets postType and Taxonomy from Custom Field instead
@@ -21,14 +25,13 @@ add_filter('Flynt/addComponentData?name=GridPostsArchive', function ($data) {
             ? $data['postTypeSelect']
             : POST_TYPE;
         $data['posts'] = Timber::get_posts([
-            // Get post type project
+            'post_status' => 'publish',
             'post_type' => $postType,
-            // Get all posts
-            'posts_per_page' => -1,
-            // Order by post date
-            'orderby' => [
-                'date' => 'DESC',
-            ],
+            'posts_per_page' => $ppp,
+            // 'offset' => $skip,
+            'paged' => $paged,  
+            'orderby'          => $orderby,
+            'order'            => $order,   
         ]);    
         switch ($postType) {
                 case 'post':
@@ -95,6 +98,13 @@ function getACFLayout()
         'label' => __('Grid: Posts Archive', 'flynt'),
         'sub_fields' => [
             [
+                'label' => __('General', 'flynt'),
+                'name' => 'generalTab',
+                'type' => 'tab',
+                'placement' => 'top',
+                'endpoint' => 0,
+            ],  
+            [
                 'label' => __('Post Type', 'flynt'),
                 'name' => 'postTypeSelect',
                 'type' => 'select',
@@ -103,8 +113,75 @@ function getACFLayout()
                     'width' => '50',
                 ],
             ],
+            [
+                'label' => __('Options', 'flynt'),
+                'name' => 'optionsTab',
+                'type' => 'tab',
+                'placement' => 'top',
+                'endpoint' => 0
+            ],
+            [
+                'label' => '',
+                'name' => 'options',
+                'type' => 'group',
+                'layout' => 'row',
+                'sub_fields' => [
+                   
+                    [
+                        'label' => __('Max Columns', 'flynt'),
+                        'name' => 'maxColumns',
+                        'type' => 'select',
+                        'choices' => [
+                            'one'=>'one',
+                            'two'=>'two',
+                            'three'=>'three'
+                        ],
+                        'default_value' => 'two',
+                        'wrapper' => [
+                            'width' => '50',
+                        ],  
+                    ],                      
+                    [
+                        'label' => __('Live Filters?', 'flynt'),
+                        'name' => 'liveFilters',
+                        'type' => 'true_false',
+                        'wrapper' => [
+                            'width' => '33',
+                        ],  
+                    ], 
+                    [
+                        'label' => __('Order By...', 'flynt'),
+                        'name' => 'orderBy',
+                        'type' => 'select',
+                        'choices' => [
+                            'date' => 'Post Date',
+                            'title' => 'Title',
+                            'menu_order' => 'Menu Order',
+                        ],
+                        'default_value' => 'date',
+                        'wrapper' => [
+                            'width' => '50',
+                        ],  
+                    ],
+                    [
+                        'label' => __('Order', 'flynt'),
+                        'name' => 'order',
+                        'type' => 'radio',
+                        'layout' => 'horizontal',
+                        'choices' => [
+                            'ASC' => 'Ascending',
+                            'DESC' => 'Descending',
+                        ],
+                        'default_value' => 'DESC',
+                        'wrapper' => [
+                            'width' => '50',
+                        ],  
+                    ],
+                ],
+            ],
         ],
     ];
+    
 }
 
 Options::addGlobal('GridPostsArchive', [
