@@ -18,21 +18,24 @@ document.addEventListener("change", (e) => {
 const addClassToggle = () => {
   let location = document.getElementById("screen-options-wrap");
   // creating button element
-  let el = document.createElement("DIV");
-  el.innerHTML = `<label for="toggle-hidden-items"><input type="checkbox" id="toggle-hidden-items">Show Hidden Menu Items (temp)</label>`;
-  // appending el to div
-  location.appendChild(el);
+  if (location) {
+    let el = document.createElement("DIV");
+    el.innerHTML = `<label for="toggle-hidden-items"><input type="checkbox" id="toggle-hidden-items">Show Hidden Menu Items (temp)</label>`;
+    // appending el to div
+    location.appendChild(el);
+  }
+  
 };
 
 const setHiddenItemVisibility = (setTo) => {
   if (setTo) {
     document.body.classList.add("show-hidden-items");
     sessionStorage.setItem("hidden-item-visibilty", true);
-    hiddenItemsToggle.checked = true
+    hiddenItemsToggle ? hiddenItemsToggle.checked = true : ''
   } else {
     document.body.classList.remove("show-hidden-items");
     sessionStorage.setItem("hidden-item-visibilty", false);
-    hiddenItemsToggle.checked = false
+    hiddenItemsToggle ? hiddenItemsToggle.checked = false : ''
   } 
 };
 
