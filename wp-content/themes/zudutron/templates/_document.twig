@@ -12,25 +12,24 @@
     {{snippets.bodyStartCode}}
     {{ function('wp_body_open') }}
    
-    {% block layout %}
+    {% block layout %}      
+      {% block header %}
+        
+      {% endblock %}
+       
+      <main id="mainContent" class="mainContent">
+        {% if function('post_password_required') %}
+          {{ function('get_the_password_form') }}
+        {% else %}
+          {% block content %}
+            No <code>{{ '{% block content %}' }}</code> defined for this template.
+          {% endblock %}
+        {% endif %}
+      </main>
       
-          {% block header %}
-           
-          {% endblock %}
-       
-        <main id="mainContent" class="mainContent">
-          {% if function('post_password_required') %}
-            {{ function('get_the_password_form') }}
-          {% else %}
-            {% block content %}
-              No <code>{{ '{% block content %}' }}</code> defined for this template.
-            {% endblock %}
-          {% endif %}
-        </main>
-       
-          {% block footer %}
-            
-          {% endblock %}
+      {% block footer %}
+        
+      {% endblock %}
       
       </div>
     {% endblock %}
