@@ -1,4 +1,4 @@
-const mainNav = document.querySelector('[name="NavigationJks"]')
+const mainNav = document.querySelector('[name="NavigationJs"]')
 const mainLinks = mainNav.querySelector('.main-links')
 const dropdowns = mainNav.querySelectorAll('.top-level > .menu-item-has-children')
 
@@ -8,9 +8,11 @@ let target
 document.addEventListener('click', function (e) {
   // MOBILE NAV TOGGLE
   if (e.target && (e.target.closest('.nav-toggle') || e.target.closest('.close'))) {
+    console.log("navtoggled")
     toggleNav()
   }
-  if (e.target && !e.target.closest('nav') && mainLinks.classList.contains('open-nav')) {
+  if (e.target && !e.target.closest('[name="NavigationJs"]') && mainLinks.classList.contains('open-nav')) {
+    console.log("notnav clicked")
     closeNav()
   }
 
@@ -69,10 +71,12 @@ function dropdownToggle (toggle, target, min) {
   }
 }
 const openNav = () => {
+  console.log("opennav")
   document.body.classList.add('pause-overflow')
   mainLinks.classList.add('open-nav')
 }
 const closeNav = () => {
+  console.log("closenav")
   document.body.classList.remove('pause-overflow')
   mainLinks.classList.remove('open-nav')
   document.querySelectorAll('.sub-menu.open').forEach(el => {
