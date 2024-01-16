@@ -92,9 +92,6 @@ img {
 
 a {
   color: $primary-color;
-  transition: all $transition, outline 0s, outline-offset 0s;  
-  text-underline-position: under;
-  outline-offset: 3px;
 
   &[disabled] {
     filter:grayscale(100%);

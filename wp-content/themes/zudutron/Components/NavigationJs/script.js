@@ -35,6 +35,7 @@ document.addEventListener('click', function (e) {
 // DESKTOP NAV DROPDOWN MOUSE OVER
 dropdowns.forEach((el) => {
   el.addEventListener('mouseover', function (e) {
+    console.log(el);
     if (window.matchMedia('(min-width: 768px)').matches) {
       dropdowns.forEach((el) => {
         const sub = el.querySelector('.sub-menu')

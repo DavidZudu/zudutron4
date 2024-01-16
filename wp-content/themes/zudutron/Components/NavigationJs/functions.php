@@ -19,10 +19,7 @@ add_action('init', function () {
 add_filter('Flynt/addComponentData?name=NavigationJs', function ($data) {
     $data['menu'] = Timber::get_menu('navigation_primary') ?? Timber::get_pages_menu();
     $data['menuExtras'] = Timber::get_menu('navigation_primary_extras') ?? Timber::get_pages_menu();
-    $data['logo'] = [
-        'src' => get_theme_mod('custom_header_logo') ? get_theme_mod('custom_header_logo') : Asset::requireUrl('dist/assets/images/logo.svg'),
-        'alt' => get_bloginfo('name')
-      ];
+    $data['logo'] = wp_get_attachment_image( get_theme_mod( 'custom_logo' ) , 'full' );
     //   var_dump($data['menu']);
     return $data;
 });

@@ -1,9 +1,10 @@
 <flynt-component name="NavigationJs">
+{{ renderComponent('LayoutNoticeBanner') }}
   <div class="wrap {{ options.containerSize }}">
     <section class="left">
       <button class="nav-toggle">=</button>
       <a href="{{ site.link }}" class="brand">
-        <img src="{{ logo.src }}" alt="{{ logo.alt }}" />
+       {{logo}}
       </a>
     </section>
 
@@ -24,21 +25,23 @@
             </a>
             {% if item.children %}
               <button class="sub-menu-button">+</button>
-              <ul class="sub-menu">
+              <ul class="sub-menu first-sub-level">
                 <div class="sub-menu-intro">
                   <button class="back">&larr;</button>
                   <div class="sub-menu-title">
-                    Title A
+                    {{item.title}}
                   </div>
                   <p>
-                    A Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Maecenas sed placerat velit.
+                    {{item.description}}
                   </p>
+                  {% for btn in item.ctas %}
+                    <a href="{{btn.cta.url}}" class="button">{{btn.cta.title}}</a>
+                  {% endfor %}
                 </div>
                 <div class="link-wrap">
                   {% for child in item.children %}
                     <li class="{{ child.classes|join(' ') }}">
-                      <a class="menu-link"
+                      <a class="menu-link {{child.style}}"
                         href="{{ child.link }}"
                         {{
                         child.target == '_blank'
@@ -52,19 +55,12 @@
                         <button class="sub-menu-button">+</button>
                         <ul class="sub-menu">
                           <div class="sub-menu-intro">
-                            <button class="back">&larr;</button>
-                            <div class="sub-menu-title">
-                              Title B
-                            </div>
-                            <p>
-                              A Lorem ipsum dolor sit amet, consectetur
-                              adipiscing elit. Maecenas sed placerat velit.
-                            </p>
+                            <button class="back">&larr;</button>                            
                           </div>
                           <div class="link-wrap">
                             {% for child in child.children %}
                               <li class="{{ child.classes|join(' ') }}">
-                                <a class="menu-link"
+                                <a class="menu-link {{child.style}}"
                                   href="{{ child.link }}"
                                   {{
                                   child.target == '_blank'
@@ -93,7 +89,7 @@
                                         <li class="{{ child.classes|join(
                                             ' '
                                           ) }}">
-                                          <a class="menu-link"
+                                          <a class="menu-link {{child.style}}"
                                             href="{{ child.link }}"
                                             {{
                                             child.target == '_blank'
@@ -138,5 +134,5 @@
       </section>
     {% endif %}
   </div>
-  {{ renderComponent('LayoutNoticeBanner') }}
+  
 </flynt-component>

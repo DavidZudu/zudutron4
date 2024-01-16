@@ -7,3 +7,14 @@
 .show-hidden-items .hidden-item {
     display:list-item;
 }
+
+/* Hide certain custom menu fields based on depth */
+[data-name="description"],
+[data-name="ctas"] {
+   display:none;
+}
+
+.menu-item-depth-0 [data-name="description"], 
+.menu-item-depth-0 [data-name="ctas"] {
+    display:block;
+}

@@ -84,7 +84,7 @@ flynt-component[name="NavigationJs"] {
       visibility: visible;
     }
     @media screen and (min-width: $nav-breakpoint) {
-      position: relative;
+      position: static; // Change this to relative for absolute dropdowns rather than full width
       opacity: 1;
       visibility: visible;
       transform: none;
@@ -120,6 +120,7 @@ flynt-component[name="NavigationJs"] {
         }
       }
       @media screen and (min-width: $nav-breakpoint) {
+        position:static;
         overflow: visible;
         flex-direction: row;
       }
@@ -148,16 +149,55 @@ flynt-component[name="NavigationJs"] {
         bottom: auto;
         transform: none;
         display: flex;
+        a {
+          &.first-level {
+            font-weight:bold;
+          }
+          &.second-level {
+            font-size:0.9em;
+          }
+          &.third-level {
+            font-size:0.8em;
+            margin-left:5px;
+          }
+        }
+        
+        &.first-sub-level {
+          pointer-events:none;  
+        }
+        
         &.open,
         &:focus-within {
           opacity: 1;
           visibility: visible;
+          pointer-events:all;
         }
         .back {
           display: none;
         }
+        .sub-menu-intro {
+          flex:0 0 200px;
+        }
         .link-wrap {
-          flex: 0 0 200px;
+          flex: 1 0 0;
+          display:flex;
+          > li {
+            flex:1;
+          }
+        }
+        // SUB SUB Menus
+        ul.sub-menu {
+          position:relative;
+          top:auto;
+          opacity:1;
+          visibility:visible;
+          
+          .sub-menu-intro {
+            display:none;
+          }
+          .link-wrap {
+            flex-direction:column;
+          }
         }
       }
     }
