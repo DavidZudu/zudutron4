@@ -1,4 +1,4 @@
-const mainNav = document.querySelector('[name="NavigationJs"]')
+const mainNav = document.querySelector('[name="NavigationJks"]')
 const mainLinks = mainNav.querySelector('.main-links')
 const dropdowns = mainNav.querySelectorAll('.top-level > .menu-item-has-children')
 
