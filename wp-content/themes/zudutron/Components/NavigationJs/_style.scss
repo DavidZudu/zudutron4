@@ -1,0 +1,201 @@
+// NAV CONFIG VARIABLES
+$nav-height: 56px;
+$nav-container-width: 1200px;
+$nav-padding: 8px;
+$nav-breakpoint: 768px;
+$nav-spacing: 16px;
+$nav-mobile-width: 200px;
+
+flynt-component[name="NavigationJs"] {
+  position: fixed;
+  z-index: 99;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  background: #eee;
+  ul {
+    @extend .list-reset;
+    line-height: 1.2em;
+  }
+  a {
+    white-space: nowrap;
+  }
+  @media screen and (min-width: $nav-breakpoint) {
+    position: sticky;
+  }
+
+  // WRAP //////////////////
+  .wrap {
+    display: flex;
+    height: $nav-height;
+    width: $nav-container-width;
+    max-width: 100%;
+    margin: auto;
+    gap: $nav-spacing;
+
+    @media screen and (max-width: $nav-breakpoint) {
+      padding: 0 !important;
+    }
+    @media screen and (min-width: $nav-breakpoint) {
+      // padding: 0 $nav-padding;
+    }
+  }
+
+  // LEFT //////////////////
+  .left {
+    display: flex;
+    gap: $nav-spacing;
+    flex: 0 1 auto;
+    .nav-toggle {
+      width: $nav-height;
+      @media screen and (min-width: $nav-breakpoint) {
+        display: none;
+      }
+    }
+    .brand {
+      height: 100%; // Needed for some reaosn despite flex-parent on "stretch"
+      padding: $nav-padding 0;
+
+      img {
+        height: 100%;
+        max-width: none;
+      }
+    }
+  }
+
+  // MAIN LINKS //////////////////
+  .main-links {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: $nav-mobile-width;
+    background: #ccc;
+    transform: translateX(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.2s;
+    display: flex;
+    flex-direction: column;
+    &.open-nav {
+      transform: translateX(0%);
+      opacity: 1;
+      visibility: visible;
+    }
+    @media screen and (min-width: $nav-breakpoint) {
+      position: relative;
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      top: auto;
+      left: auto;
+      bottom: auto;
+      width: auto;
+      background: 0;
+    }
+
+    // TOP BAR //////////////////
+    .top {
+      text-align: right;
+      @media screen and (min-width: $nav-breakpoint) {
+        display: none;
+      }
+    }
+
+    // TOP LEVEL MENU //////////////////
+    ul.top-level {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      overflow: hidden;
+      > li {
+        display: flex;
+        > a {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          padding: $nav-spacing;
+        }
+      }
+      @media screen and (min-width: $nav-breakpoint) {
+        overflow: visible;
+        flex-direction: row;
+      }
+    }
+
+    // SUB MENUS //////////////////
+    ul.sub-menu {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      transform: translateX(100%);
+      background: #ddd;
+      transition: 0.2s;
+      visibility: hidden;
+      &.open {
+        transform: translateX(0%);
+        visibility: visible;
+      }
+
+      @media screen and (min-width: $nav-breakpoint) {
+        opacity: 0;
+        visibility: hidden;
+        top: 100%;
+        bottom: auto;
+        transform: none;
+        display: flex;
+        &.open,
+        &:focus-within {
+          opacity: 1;
+          visibility: visible;
+        }
+        .back {
+          display: none;
+        }
+        .link-wrap {
+          flex: 0 0 200px;
+        }
+      }
+    }
+
+    // Desktop focus fix for tabbing through nav
+    .menu-item-has-children {
+      @media screen and (min-width: $nav-breakpoint) {
+        a {
+          &:focus {
+            + button {
+              + .sub-menu {
+                opacity: 1;
+                visibility: visible;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // SUB MENU BUTTON //////////////////
+    .sub-menu-button {
+      @media screen and (min-width: $nav-breakpoint) {
+        display: none;
+      }
+    }
+  }
+
+  // RIGHT
+  .right {
+    display: flex;
+    padding: $nav-padding;
+    padding-left: 0;
+    margin-left: auto;
+    a {
+      padding: $nav-padding;
+    }
+    @media screen and (min-width: $nav-breakpoint) {
+    }
+  }
+}

@@ -9,12 +9,13 @@
     {{ function('wp_head') }}
   </head>
   <body>
+  
     {{snippets.bodyStartCode}}
     {{ function('wp_body_open') }}
    
     {% block layout %}      
-      {% block header %}
-        
+      {% block nav %}
+        {{ renderComponent("NavigationJs") }}
       {% endblock %}
        
       <main id="mainContent" class="mainContent">

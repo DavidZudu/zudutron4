@@ -1,0 +1,164 @@
+// Padding and Margin Classes
+$spaceamounts: (0, 5, 10, 15, 20, 30, 40, 50, 60, 70, 80, 90, 100);
+$sides: (top, bottom, left, right, all);
+@each $space in $spaceamounts {
+  @each $side in $sides {
+    @if $side == "all" {
+      .m#{$space} {
+        margin: #{$space}px;
+      }
+
+      .p#{$space} {
+        padding: #{$space}px;
+      }
+    } @else {
+      .m#{str-slice($side, 0, 1)}#{$space} {
+        margin-#{$side}: #{$space}px !important;
+      }
+
+      .p#{str-slice($side, 0, 1)}#{$space} {
+        padding-#{$side}: #{$space}px !important;
+      }
+    }
+  }
+}
+
+// Lead paragraph
+.lead {
+  font-weight:100;
+  font-size: 1.2em;
+  line-height: 1.4em;
+}
+
+// Clear default list styles
+.list-reset {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  li {
+    margin-bottom: 0;
+  }
+  ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+}
+
+// Emulate background-position:center; background-size:cover;
+.img-bg-center-cover {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 101%;
+  min-height: 101%;
+  object-fit: cover;
+  // ie conditional - object-fit failure fallback
+  @media all and (-ms-high-contrast: none) {
+    max-height: none;
+    max-width: none;
+  }
+}
+
+// Basic styles of an overlay element
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: black;
+  opacity: 0.5;
+  &.grad {
+    background: linear-gradient(to top, rgba(black, 0.7), rgba(black, 0));
+    opacity: 1;
+  }
+}
+
+// Small caps text display
+.small-caps {
+  text-transform: uppercase;
+  font-family: $heading-font-stack;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  font-size: 0.9em;
+}
+
+// Text alignment
+.text-left {
+  text-align: left !important;
+}
+.text-right {
+  text-align: right !important;
+}
+.text-center {
+  text-align: center !important;
+}
+
+// Hide reCaptcha badge if added by plugins etc
+.grecaptcha-badge {
+  display: none;
+}
+
+// Custom container class
+.container {
+  width: 100%;
+  margin: auto;
+  max-width: 1400px;
+  padding-left: 20px;
+  padding-right: 20px;
+  &.sm {
+    max-width: 1000px;
+  }
+  &.lg {
+    max-width: 1800px;
+  }    
+}
+
+// Padding used for blocks
+.componentSpacing {
+  padding-top:40px;
+  padding-bottom:40px;
+  @media screen and (min-width:768px) {
+    padding-top:80px;
+    padding-bottom:80px;
+  }
+}
+.componentSpacing-sm {
+  padding-top:40px;
+  padding-bottom:40px;
+  
+}
+.componentSpacing-lg {
+  padding-top:40px;
+  padding-bottom:40px;
+  @media screen and (min-width:768px) {
+    padding-top:80px;
+    padding-bottom:80px;
+  }
+  @media screen and (min-width:992px) {
+    padding-top:100px;
+    padding-bottom:100px;
+  }
+}
+
+// Small downward triangle
+.caret {
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid $primary-color;
+  font-size: 0;
+  line-height: 0;
+}
+
+// Makes an img fully white or black
+.whiten {
+  filter: brightness(1000%)!important;
+}
+.blacken {
+  filter: brightness(0%)!important;
+}
+

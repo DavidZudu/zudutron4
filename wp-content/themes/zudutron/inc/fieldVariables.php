@@ -44,45 +44,37 @@ function getSize($default = 'medium')
     ];
 }
 
-function getAlignment($args = [])
+function getContainerSize()
 {
-    $options = wp_parse_args($args, [
-        'label' => __('Align', 'flynt'),
-        'name' => 'align',
-        'default' => 'center',
-    ]);
-
     return [
-        'label' => $options['label'],
-        'name' => $options['name'],
-        'type' => 'radio',
-        'other_choice' => 0,
-        'save_other_choice' => 0,
-        'layout' => 'horizontal',
+        'label' => __('Container Size', 'flynt'),
+        'name' => 'containerSize',
+        'type' => 'select',
+        'default_value' => 'container',
         'choices' => [
-            'left' => __('Left', 'flynt'),
-            'center' => __('Center', 'flynt'),
+            'container-none' => 'None',
+            'container sm' => 'Small',
+            'container' => 'Regular',
+            'container lg' => 'Large'
         ],
-        'default_value' => $options['default']
+        'instructions' => __('Select the size of the content container', 'flynt'),
+        'required' => 1
     ];
 }
-
-function getTextAlignment($args = [])
+function getCTAFields()
 {
-    $options = wp_parse_args($args, [
-        'label' => __('Align text', 'flynt'),
-        'name' => 'textAlign',
-        'default' => 'left',
-    ]);
-
     return [
-        'label' => $options['label'],
-        'name' => $options['name'],
-        'type' => 'button_group',
-        'choices' => [
-            'left' => sprintf('<i class="dashicons dashicons-editor-alignleft" title="%1$s"></i>', __('Align text left', 'flynt')),
-            'center' => sprintf('<i class="dashicons dashicons-editor-aligncenter" title="%1$s"></i>', __('Align text center', 'flynt'))
+        'label' => __('Calls To Action', 'flynt'),
+        'name' => 'ctas',
+        'type' => 'repeater',
+        'layout' => 'block',
+        'button_label' => 'Add Link',
+        'sub_fields' => [
+            [
+                'label' => __('CTA', 'flynt'),
+                'name' => 'cta',
+                'type' => 'link',                
+            ],
         ],
-        'default_value' => $options['default']
-    ];
+    ];    
 }

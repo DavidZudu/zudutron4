@@ -1,0 +1,14 @@
+{% if toggleNotice and noticeLink %}
+<aside class="flyntComponent" is="flynt-layout-notice-banner">
+  <a class=""
+    href="{{ noticeLink.url }}"
+    {{
+    noticeLink.target == '_blank'
+      ? 'target="_blank" rel="noopener noreferrer"'
+    }}>
+    {{ noticeLink.icon
+      ? '<i class="' ~ noticeLink.icon ~ '"></i>'
+      : noticeLink.title }}
+  </a>
+</aside>
+{% endif %}

@@ -1,0 +1,71 @@
+<flynt-component name="NavigationJs">
+
+  <div class="wrap {{ options.containerSize }}">
+
+    <section class="left">
+      <button class="nav-toggle">=</button>
+      <a href="{{ site.link }}" class="brand">
+        <img src="{{ logo.src }}" alt="{{ logo.alt }}" />
+      </a>
+    </section>
+
+    <section class="main-links">
+      
+      <div class="top">
+        <button class="close">X</button>
+      </div>
+
+      <ul class="top-level">
+      {% for item in menu.items %}
+          <li class="{{ item.classes|join(' ') }}">
+            <a href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
+                {{ item.icon
+                      ? '<i class="' ~ item.icon ~ '"></i>'
+                      : item.title }}
+            </a>     
+            {% if item.children %}
+            <button class="sub-menu-button">+</button> 
+              <ul class="sub-menu">
+                <div class="sub-menu-intro">
+                <button class="back">&larr;</button>
+                <div class="sub-menu-title">Title A</div>
+                <p>
+                  A Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed placerat velit.
+                </p>
+              </div> 
+              <div class="link-wrap">
+              {% for child in item.children %}
+                <li class="{{ child.classes|join(' ') }}">
+                  <a class="menu-link"
+                    href="{{ child.link }}"
+                    {{
+                    child.target == '_blank'
+                      ? 'target="_blank" rel="noopener noreferrer"'
+                    }}>
+                    {{ child.icon
+                      ? '<i class="' ~ child.icon ~ '"></i>'
+                      : child.title }}
+                  </a>
+                </li>
+                {% endfor %}
+              </div>
+              
+              </ul>
+            {% endif %}
+          </li>
+        {% endfor %}  
+      </ul>
+    </section>
+    {% if menuExtras.items > 0 %}
+    <section class="right">
+      {% for item in menuExtras.items %}         
+        <a class="{{ item.classes|join(' ') }}" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
+            {{ item.icon ? '<i class="' ~ item.icon ~ '"></i>' : item.title }}
+        </a> 
+       {% endfor %} 
+    </section>
+     {% endif %}
+
+  </div>
+  {{ renderComponent("LayoutNoticeBanner") }}
+</flynt-component>
