@@ -22,6 +22,14 @@ add_action('Flynt/afterRegisterComponents', function () {
                 'third-level' => 'Third Level',
             ],
         ],
+        [
+          'name' => 'icon',
+          'label' => __('Nav Icon', 'flynt'),
+          'type' => 'font-awesome',
+          'instructions' => 'Use an icon instead of the text label.',
+          'icon_sets' => ['fas', 'far', 'fab'],
+          'save_format' => 'class'
+        ],  
             [
                 'label' => __('Description', 'flynt'),               
                 'name' => 'description',
