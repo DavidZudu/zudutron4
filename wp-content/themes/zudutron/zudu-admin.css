@@ -13,7 +13,6 @@
 [data-name="ctas"] {
    display:none;
 }
-
 .menu-item-depth-0 [data-name="description"], 
 .menu-item-depth-0 [data-name="ctas"] {
     display:block;

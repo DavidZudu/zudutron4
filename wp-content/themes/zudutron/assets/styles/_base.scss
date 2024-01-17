@@ -8,7 +8,7 @@ html {
 }
 
 *::selection {
-  background: rgba(tint($primary-color, 20%), 0.8);
+  background: rgba($primary-color, 0.8);
   color: white;
 }
 

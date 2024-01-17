@@ -37,7 +37,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                 'rows' => '2',
             ],
             
-            FieldVariables\getCTAFields(),
+            FieldVariables\setCTAs(),
         ],
         'location' => [
             [

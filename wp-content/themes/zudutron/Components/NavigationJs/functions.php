@@ -35,7 +35,7 @@ Options::addGlobal('NavigationJs', [
         'type' => 'group',
         'layout' => 'row',
         'sub_fields' => [
-            FieldVariables\getContainerSize()
+            FieldVariables\setContainerSize()
         ],
     ],
 ]);
