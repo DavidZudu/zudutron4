@@ -26,35 +26,7 @@ function setContainerSize()
         ),
     ];
 }
-function setCTAs()
-{
-    return [
-        'label' => __('Calls To Action', 'flynt'),
-        'name' => 'ctas',
-        'type' => 'repeater',
-        'layout' => 'block',
-        'button_label' => 'Add Button',
-        'sub_fields' => [
-            [
-                'label' => __('CTA', 'flynt'),
-                'name' => 'cta',
-                'type' => 'link',
-            ],
-            [
-                'label' => __('Button Style', 'flynt'),
-                'name' => 'style',
-                'type' => 'radio',
-                'layout' => 'horizontal',
-                'default_value' => '',
-                'choices' => [
-                    '' => 'Pink',
-                    'purple' => 'Purple',
-                    'white' => 'White',
-                ],
-            ],
-        ],
-    ];
-}
+
 function setBackgroundColor()
 {
     return [
@@ -62,10 +34,10 @@ function setBackgroundColor()
         'name' => 'backgroundColor',
         'type' => 'radio',
         'layout' => 'horizontal',
-        'default_value' => 'bg-white',
+        'default_value' => '',
         'choices' => [
-            'bg-white' => 'White',
-            'bg-light' => 'Light',
+            '' => 'None (white)',
+            'bg-light' => 'Light Grey',
         ],
     ];
 }
@@ -91,10 +63,13 @@ function setPadding()
         'name' => 'padding',
         'type' => 'checkbox',
         'layout' => 'horizontal',
-        'default_value' => 'componentSpacing',
+        'return_value' => 'value',
+        'default_value' => [
+            'pt0','pb0'
+        ],
         'choices' => [
-            'pt0' => 'Top',
-            'pb0' => 'Bottom',
+            'top' => 'Top',
+            'bottom' => 'Bottom',
         ],
     ];
 }
@@ -127,6 +102,37 @@ function setBackgroundPattern()
 //         alt="" />
 //     {% endif %}
 
+
+
+function setCTAs()
+{
+    return [
+        'label' => __('Calls To Action', 'flynt'),
+        'name' => 'ctas',
+        'type' => 'repeater',
+        'layout' => 'block',
+        'button_label' => 'Add Button',
+        'sub_fields' => [
+            [
+                'label' => __('CTA', 'flynt'),
+                'name' => 'cta',
+                'type' => 'link',
+            ],
+            [
+                'label' => __('Button Style', 'flynt'),
+                'name' => 'style',
+                'type' => 'radio',
+                'layout' => 'horizontal',
+                'default_value' => '',
+                'choices' => [
+                    '' => 'Pink',
+                    'purple' => 'Purple',
+                    'white' => 'White',
+                ],
+            ],
+        ],
+    ];
+}
 function setIntro()
 {
     return [
