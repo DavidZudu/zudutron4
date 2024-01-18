@@ -15,7 +15,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                 'type' => 'flexible_content',
                 'button_label' => __('Add Component', 'flynt'),
                 'layouts' => [
-                    // Components\BlockAnchor\getACFLayout(),
+                    Components\BlockAnchor\getACFLayout(),
                     // Components\BlockImage\getACFLayout(),
                     // Components\BlockImageText\getACFLayout(),
                     // Components\BlockSpacer\getACFLayout(),

@@ -145,3 +145,12 @@ function setIntro()
         ),
     ];    
 }
+function setAnchor()
+{
+    return [
+        'label' => __('Section Anchor', 'flynt'),
+        'name' => 'sectionAnchor',
+        'type' => 'text',
+        'instructions' => 'Anchor'        
+    ];    
+}

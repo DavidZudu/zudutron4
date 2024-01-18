@@ -1,6 +1,6 @@
-<flynt-component name="BlockWysiwyg" class="{{options.backgroundColor}} {{options.paddingSize}} {{fn('disablePadding',options.padding)}}">
+ <flynt-component name="BlockWysiwyg" {{options.sectionAnchor ? 'id="'~ options.sectionAnchor ~'"'}}  class="{{options.backgroundColor}} {{options.paddingSize}} {{fn('disablePadding',options.padding)}}">
   <div class="{{options.containerSize}}">
-    <div class="content">
+    <div class="content"    
       {{ contentHtml }}
     </div>
   </div>

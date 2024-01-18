@@ -5,7 +5,8 @@ document.addEventListener("DOMContentLoaded", (e) => {
   addClassToggle();
   hiddenItemsToggle = document.querySelector("#toggle-hidden-items");
   const visibility = sessionStorage.getItem("hidden-item-visibilty");
-  visibility ? setHiddenItemVisibility(true) : setHiddenItemVisibility(false)
+  visibility ? setHiddenItemVisibility(true) : setHiddenItemVisibility(false) 
+  anchorTextHandle(); 
 });
 
 document.addEventListener("change", (e) => {
@@ -43,3 +44,12 @@ const checkHiddenItemVisibility = () => {
     visibility  = sessionStorage.getItem("hidden-item-visibilty");
     console.log(visibility)
 }
+
+const anchorTextHandle = () => {
+  document.querySelectorAll('[data-name="sectionAnchor"]').forEach(el => {
+    let field = el.querySelector('.acf-input-wrap > input')
+    console.log(field.value);
+    el.querySelector('.description').innerText = '#'+field.value.replace(/[^A-Za-z0-9]/g, '-').toLowerCase();
+  })
+}
+

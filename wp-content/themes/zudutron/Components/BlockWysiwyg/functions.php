@@ -4,6 +4,16 @@ namespace Flynt\Components\BlockWysiwyg;
 
 use Flynt\FieldVariables;
 
+add_filter('Flynt/addComponentData?name=BlockWysiwyg', function ($data) {
+    if (isset($data['options']['sectionAnchor'])) {
+        $data['options']['sectionAnchor'] = preg_replace('/[^A-Za-z0-9]/', '-', strtolower($data['options']['sectionAnchor']));
+    }
+
+    
+
+    return $data;
+});
+
 function getACFLayout()
 {
     return [
@@ -42,7 +52,8 @@ function getACFLayout()
                     FieldVariables\setBackgroundColor(),
                     FieldVariables\setPadding(),
                     FieldVariables\setPaddingSize(),
-                    FieldVariables\setBackgroundPattern()
+                    FieldVariables\setBackgroundPattern(),
+                    FieldVariables\setAnchor()
                 ]
             ]
         ]
