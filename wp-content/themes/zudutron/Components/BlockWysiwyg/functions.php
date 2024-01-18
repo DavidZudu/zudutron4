@@ -27,8 +27,9 @@ function getACFLayout()
                 'placement' => 'top',
                 'endpoint' => 0,
             ],
+            // FieldVariables\setIntro(),
             [
-                'label' => __('Text', 'flynt'),
+                'label' => __('Wysiwyg Content', 'flynt'),
                 'name' => 'contentHtml',
                 'type' => 'wysiwyg',
                 'delay' => 0,

@@ -139,7 +139,7 @@ function setIntro()
         'label' => __('Section Intro', 'flynt'),
         'name' => 'sectionIntro',
         'type' => 'wysiwyg',
-        'default_value' => '<h2>Section Title Here</h2>',
+        'default_value' => '<h2>Section Title Here</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ac malesuada ex. Proin at sollicitudin magna. Cras elementum sapien sit amet elit porta, et tincidunt mi finibus.</p>',
         'wrapper' => array (
             'class' => 'sm',
         ),
