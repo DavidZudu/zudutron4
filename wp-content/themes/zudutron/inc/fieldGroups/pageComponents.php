@@ -22,6 +22,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                     // Components\BlockVideoOembed\getACFLayout(),
                     Components\BlockSplitContent\getACFLayout(),
                     Components\BlockWysiwyg\getACFLayout(),
+                    Components\BlockCTABar\getACFLayout(),
                     // Components\GridImageText\getACFLayout(),
                     // Components\GridPostsLatest\getACFLayout(),
                     // Components\GridPostsArchive\getACFLayout(),

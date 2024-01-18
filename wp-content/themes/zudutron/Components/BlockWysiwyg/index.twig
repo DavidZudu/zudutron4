@@ -1,4 +1,5 @@
  <flynt-component name="BlockWysiwyg" {{options.sectionAnchor ? 'id="'~ options.sectionAnchor ~'"'}}  class="{{options.backgroundColor}} {{options.paddingSize}} {{fn('disablePadding',options.padding)}}">
+  {{fn('getBackgroundPattern',options.backgroundPattern)}}
   <div class="{{options.containerSize}}">
     <div class="content" >   
       {{ contentHtml }}

@@ -6,14 +6,14 @@
 
 namespace Flynt\FieldVariables;
 
-function setContainerSize()
+function setContainerSize($default = 'container')
 {
     return [
         'label' => __('Container Size', 'flynt'),
         'name' => 'containerSize',
         'type' => 'radio',
         'layout' => 'horizontal',
-        'default_value' => 'container',
+        'default_value' => $default,
         'choices' => [
             'container-none' => 'None',
             'container sm' => 'Small',

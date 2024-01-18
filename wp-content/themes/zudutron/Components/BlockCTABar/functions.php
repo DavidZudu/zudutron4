@@ -1,10 +1,10 @@
 <?php
 
-namespace Flynt\Components\BlockWysiwyg;
+namespace Flynt\Components\BlockCTABar;
 
 use Flynt\FieldVariables;
 
-add_filter('Flynt/addComponentData?name=BlockWysiwyg', function ($data) {
+add_filter('Flynt/addComponentData?name=BlockCTABar', function ($data) {
     if (isset($data['options']['sectionAnchor'])) {
         $data['options']['sectionAnchor'] = preg_replace('/[^A-Za-z0-9]/', '-', strtolower($data['options']['sectionAnchor']));
     }
@@ -17,8 +17,8 @@ add_filter('Flynt/addComponentData?name=BlockWysiwyg', function ($data) {
 function getACFLayout()
 {
     return [
-        'name' => 'blockWysiwyg',
-        'label' => __('Block: Wysiwyg', 'flynt'),
+        'name' => 'blockCTABar',
+        'label' => __('Block: CTA Bar', 'flynt'),
         'sub_fields' => [
             [
                 'label' => __('Content', 'flynt'),
@@ -27,15 +27,9 @@ function getACFLayout()
                 'placement' => 'top',
                 'endpoint' => 0,
             ],
-            // FieldVariables\setIntro(),
-            [
-                'label' => __('Wysiwyg Content', 'flynt'),
-                'name' => 'contentHtml',
-                'type' => 'wysiwyg',
-                'delay' => 0,
-                'media_upload' => 1,
-                
-            ],
+            FieldVariables\setIntro(),
+            FieldVariables\setCtas(),
+            
             [
                 'label' => __('Options', 'flynt'),
                 'name' => 'optionsTab',
@@ -49,11 +43,11 @@ function getACFLayout()
                 'type' => 'group',
                 'layout' => 'row',
                 'sub_fields' => [
-                    FieldVariables\setContainerSize(),
+                    FieldVariables\setContainerSize('container-none'),
                     FieldVariables\setBackgroundColor(),
-                    FieldVariables\setPadding(),
-                    FieldVariables\setPaddingSize(),
-                    // FieldVariables\setBackgroundPattern(),
+                    // FieldVariables\setPadding(),
+                    // FieldVariables\setPaddingSize(),
+                    FieldVariables\setBackgroundPattern(),
                     FieldVariables\setAnchor()
                 ]
             ]

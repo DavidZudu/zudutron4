@@ -7,7 +7,7 @@ $nav-spacing: 16px;
 $nav-mobile-width: 200px;
 
 [name="NavigationJs"] {
-  position: fixed;
+  position: sticky;
   z-index: 99;
   top: 0;
   left: 0;
