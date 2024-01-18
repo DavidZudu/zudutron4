@@ -56,7 +56,7 @@ function setPaddingSize()
         ],
     ];
 }
-function setPadding()
+function setPadding($default = ['top','bottom'])
 {
     return [
         'label' => __('Padding', 'flynt'),
@@ -64,9 +64,7 @@ function setPadding()
         'type' => 'checkbox',
         'layout' => 'horizontal',
         'return_value' => 'value',
-        'default_value' => [
-            'pt0','pb0'
-        ],
+        'default_value' => $default,
         'choices' => [
             'top' => 'Top',
             'bottom' => 'Bottom',
@@ -108,7 +106,7 @@ function setCTAs()
 {
     return [
         'label' => __('Calls To Action', 'flynt'),
-        'name' => 'ctas',
+        'name' => 'ctaLinks',
         'type' => 'repeater',
         'layout' => 'block',
         'button_label' => 'Add Button',
@@ -117,6 +115,9 @@ function setCTAs()
                 'label' => __('CTA', 'flynt'),
                 'name' => 'cta',
                 'type' => 'link',
+                'wrapper'=> [
+                    'width'=>'60'
+                ]
             ],
             [
                 'label' => __('Button Style', 'flynt'),
@@ -129,6 +130,9 @@ function setCTAs()
                     'purple' => 'Purple',
                     'white' => 'White',
                 ],
+                'wrapper'=> [
+                    'width'=>'40'
+                ]
             ],
         ],
     ];
