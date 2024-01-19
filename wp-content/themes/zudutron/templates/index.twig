@@ -13,7 +13,7 @@
 {% else %}
 
 
-   {{ renderComponent('LayoutPageHeader',{ 'pageTitle':function('get_the_archive_title'),'pageDesc':function('get_the_archive_description'), 'options': {'containerSize': 'container'}}) }}
+   {# {{ renderComponent('LayoutPageHeader',{ 'pageTitle':function('get_the_archive_title'),'pageDesc':function('get_the_archive_description'), 'options': {'containerSize': 'container'}}) }} #}
    {{ renderComponent('BlockPostsArchive', { posts: posts, options: {maxColumns: 'three' , containerSize:'container'} }) }}
 
   

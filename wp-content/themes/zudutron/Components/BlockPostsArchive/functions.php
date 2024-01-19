@@ -39,7 +39,7 @@ add_filter('Flynt/addComponentData?name=BlockPostsArchive', function ($data) {
         ]); 
         $data['posts'] = $queriedObject;
     } else {
-        $queriedObject = get_queried_object();        
+        $queriedObject = get_queried_object(); 
         $postType = get_taxonomy(get_queried_object()->taxonomy)->object_type[0]; 
     }        
 

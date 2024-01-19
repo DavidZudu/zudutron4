@@ -33,3 +33,9 @@ function acf_load_post_types($field)
 //     // return the field
 //     return $field;
 // }
+
+function mytest_reference_slug_output() {
+    ?>
+    <input name="mytheme_reference_slug" type="text" class="regular-text code" value="<?php echo esc_attr(get_option('mytheme_reference_slug')); ?>" placeholder="<?php echo 'reference'; ?>" />
+    <?php
+    }
