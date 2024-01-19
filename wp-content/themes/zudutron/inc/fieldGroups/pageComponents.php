@@ -16,6 +16,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                 'button_label' => __('Add Component', 'flynt'),
                 'layouts' => [
                    
+                    Components\BlockAccordions\getACFLayout(),
                     Components\BlockSplitContent\getACFLayout(),
                     Components\BlockWysiwyg\getACFLayout(),
                     Components\BlockCTABar\getACFLayout(),

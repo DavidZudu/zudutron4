@@ -1,0 +1,64 @@
+[name="BlockAccordions"] {
+}
+
+.dc-accordion {
+    margin-bottom:20px;
+    transition:0.2s;
+    counter-increment:step-counter;
+    &:hover {
+      background:$light-color;
+      summary{
+        &:before {
+          color:$primary-color;
+        }
+      }
+    }
+    summary {
+      position: relative;
+      font-size: 1.5em;
+      list-style: none;    
+      cursor: pointer;
+      padding:30px;
+      padding-right: 80px;
+      color:$primary-color;
+      &:before {
+        position: absolute;
+        content: "+";
+        right: 30px;
+        transition: all 0.2s;
+        color:$text-color;
+        @extend .small-caps;
+      }   
+    } 
+    .content {
+      padding:30px;
+      padding-top:0;
+      opacity:0;
+      transition: all 0.2s;
+      *:last-child {
+        margin-bottom:0;
+      }
+    }
+    &[open] {
+      background:$light-color;
+      > summary {
+        &:before {
+          transform:rotate(45deg);
+          color:$primary-color;
+        }
+      }
+      .content {
+        opacity:1;
+      }
+    }
+    &.numbered {
+      summary {
+        &:before {
+          content: "0" counter(step-counter);
+          transform:none!important;
+        }
+      }
+          
+    }
+  }
+  

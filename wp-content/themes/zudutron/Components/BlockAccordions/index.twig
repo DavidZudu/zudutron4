@@ -1,0 +1,13 @@
+ <flynt-component name="BlockAccordions" {{options.sectionAnchor ? 'id="'~ options.sectionAnchor ~'"'}}  class="{{options.backgroundColor}} {{options.paddingSize}} {{fn('disablePadding',options.padding)}}">
+  {{fn('getBackgroundPattern',options.backgroundPattern)}}
+  <div class="{{options.containerSize}}">
+     {% for acc in accordions %}
+      <details class="dc-accordion {{options.isNumbered ? 'numbered' }}" {{acc.isOpen ? 'open' }}> 
+        <summary>{{acc.title}}</summary>
+        <div class="content">
+          {{acc.content}}
+        </div> 
+      </details>
+    {% endfor %}
+  </div>
+</flynt-component>
