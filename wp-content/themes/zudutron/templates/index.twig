@@ -1,8 +1,21 @@
 {% extends 'templates/_document.twig' %}
 
 {% block content %}
-  {# {{ renderComponent('GridPostsArchive', { posts: posts }) }}
+  {% if not function('is_archive') %}
+
+ 
+{% for component in post.meta('headerComponents') %}
+    {{ renderComponent(component) }}
+  {% endfor %}
   {% for component in post.meta('pageComponents') %}
     {{ renderComponent(component) }}
-  {% endfor %} #}
+  {% endfor %}
+{% else %}
+
+
+   {{ renderComponent('LayoutPageHeader',{ 'pageTitle':function('get_the_archive_title'),'pageDesc':function('get_the_archive_description'), 'options': {'containerSize': 'container'}}) }}
+   {{ renderComponent('BlockPostsArchive', { posts: posts, options: {maxColumns: 'three' , containerSize:'container'} }) }}
+
+  
+{% endif %}
 {% endblock %}

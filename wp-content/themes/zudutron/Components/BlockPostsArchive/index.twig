@@ -1,0 +1,82 @@
+
+<section class="flyntComponent componentSpacing {{options.paddingSize}} {{options.disablePadding}} {{terms ? 'has-filters'}}" is="flynt-block-posts-archive">
+  <div class="{{ options.containerSize }}">  
+
+    {% if terms %}
+     <div class="filters {{options.liveFilters ? 'live'}}">
+     <div class="terms-wrap">
+      
+  
+     <span class=""><i class="fas fa-tags mr8"></i><strong>:</strong></span>
+     
+        {% for term in terms %}          
+            <a href="{{ term.link }}" data-filter="{{ term.title == "All" ? '*'}} {{term.taxonomy == taxonomy ? function('sanitize_title',term.title)}}" class="filter {{ term.isActive ? 'active' }}"  {{ term.isActive and not options.liveFilters ? 'disabled' }}>
+             {{ term.title }}
+            </a>          
+        {% endfor %}
+      </div>
+      </div>
+    {% endif %}
+
+    {% if posts %}
+      <div class="posts {{ options.maxColumns ? options.maxColumns : defaultMaxColumns}} {{options.liveFilters ? 'grid'}}">
+        {% for post in posts %}
+          <article class="post" data-cat="{% for term in post.terms %}{{term.taxonomy == taxonomy ? function('sanitize_title',term.name)}} {% endfor %}">
+            <a class="image {{postShape}}" href="{{ post.link }}">
+              {% if post.thumbnail %}
+                 <img loading="lazy"
+                  class="img-bg-center-cover"
+                  src="{{ post.thumbnail.src }}"
+                  sizes="(max-width: 768px) 100vw, 780px"
+                  srcset="{{ post.thumbnail.srcset }}"
+                  alt="{{ post.thumbnail.alt }}" />
+              {% endif %}
+            </a>
+            <div class="content">
+            <div class="meta">
+              {% if post.post_type != 'event' %}
+                <span class="pill teal">{{post.date}}</span>
+              {% endif %}
+              {% for term in post.terms %}            
+                {{term.taxonomy == taxonomy ? '<span class="pill">'~ term.name ~ '</span>'}} 
+              {% endfor %}     
+            </div> 
+                     
+              <h2 class="h3 title mt8">
+                <a class="" href="{{ post.link }}" title="{{ post.title }}" aria-hidden="true" tabindex="-1">{{post.title}}</a>
+              </h2>
+              {# <p class="excerpt">{{ post.preview.read_more(false) }}</p> #}
+              {# <a class="" href="{{ post.link }}" title="{{ post.title }}" aria-hidden="true" tabindex="-1">
+                {{ labels.readMore }}
+              </a> #}
+            </div>
+          </article>
+        {% else %}
+          <p class="posts-empty">{{ labels.noPostsFound }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% set pagination = posts.pagination %}
+    {% if pagination.pages %}
+     {% if loadMore %}
+        {% if pagination.next %}
+          <div class="pagination pagination--center">
+            <div class="pagination-loadMore">
+            <a data-action="loadMore" href="{{ pagination.next.link }}" class="button button--small">{{ labels.loadMore }}</a>
+            </div>
+          </div>
+        {% endif %}
+      {% else %}
+        <div class="pagination {% if not pagination.prev %} pagination--prevDisabled{% endif %}">
+          {% if pagination.prev %}
+            <a href="{{ pagination.prev.link }}" class="pagination-previous button button--small"><i data-feather="arrow-left" class="arrow"></i> {{ labels.previous }}</a>
+          {% endif %}
+          {% if pagination.next %}
+            <a href="{{ pagination.next.link }}" class="pagination-next button button--small">{{ labels.next }} <i data-feather="arrow-right" class="arrow"></i></a>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
+</section>

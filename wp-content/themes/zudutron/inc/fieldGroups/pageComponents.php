@@ -20,6 +20,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                     Components\BlockWysiwyg\getACFLayout(),
                     Components\BlockCTABar\getACFLayout(),
                     Components\BlockFullImageBackground\getACFLayout(),
+                    Components\BlockPostsArchive\getACFLayout(),
                     // Components\ReusableComponent\getACFLayout(),
                 ],
             ],

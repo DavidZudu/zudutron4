@@ -1,0 +1,139 @@
+header + [is="flynt-block-posts-archive"].has-filters {
+  padding-top: 0;
+
+  @media screen and (min-width: 768px) {
+    margin-top:-36px;
+  }
+}
+
+[is="flynt-block-posts-archive"] {
+  .filters {
+    
+    margin-bottom: 32px;
+    background: white;
+    margin-left:-32px;
+    margin-right:-32px;
+    box-shadow:$bs-lg;
+    @media screen and (min-width:768px) {
+      display:inline-block;
+      margin-left:0;
+      margin-right:0;
+      border-radius:999px;
+      margin-bottom:80px;
+    }      
+    
+    .terms-wrap {
+      display: flex;
+      overflow: auto;
+      padding:16px 32px;
+      gap:24px;
+      &::-webkit-scrollbar {
+        height: 3px;
+        border-radius: 999px;
+
+        @media (hover: hover) {
+          height: 10px;
+        }
+      }
+
+      /* Track */
+      &::-webkit-scrollbar-track {
+        background: $light-color;
+        border-radius: 999px;
+      }
+
+      /* Handle */
+      &::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 999px;
+      }
+
+      /* Handle on hover */
+      &::-webkit-scrollbar-thumb:hover {
+        background: #777;
+      }
+    }
+  }
+  .posts {
+    display: grid;
+    gap: 40px;
+    grid-template-columns: 1fr;
+    &.grid {
+      .post {
+        width: 100%;
+      }
+      @media screen and (min-width: 768px) {
+        .post {
+          margin-right: 20px;
+        }
+        &.two,
+        &.three {
+          .post {
+            width: calc(50% - 20px);
+          }
+        }
+      }
+      @media screen and (min-width: 992px) {
+        &.three {
+          .post {
+            width: calc(33.33% - 20px);
+          }
+        }
+      }
+    }
+    @media screen and (min-width: 768px) {
+      &.two,
+      &.three {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media screen and (min-width: 992px) {
+      &.three {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+
+    .post {
+      position: relative;
+      .image {
+        position: relative;
+        display: block;
+        padding-top: 56.25%;
+        overflow: hidden;
+        margin-bottom: 20px;
+        &.portrait {
+          padding-top: 140%;
+        }
+        &.square {
+          padding-top: 100%;
+        }
+      }
+      .meta {
+        display:flex;
+        gap:8px;
+      }
+      .excerpt {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* number of lines to show */
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+      @media screen and (min-width: 768px) {
+      }
+    }
+  }
+}
+
+.pagination {
+  display:flex;
+  justify-content: center;
+  gap:24px;
+  .pagination-previous {
+    svg {
+      margin-left:0;
+      margin-right:8px;
+    }
+  }
+}
