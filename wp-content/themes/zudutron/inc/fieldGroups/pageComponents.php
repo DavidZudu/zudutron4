@@ -22,6 +22,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                     Components\BlockCTABar\getACFLayout(),
                     Components\BlockFullImageBackground\getACFLayout(),
                     Components\BlockPostsArchive\getACFLayout(),
+                    Components\BlockTabs\getACFLayout(),
                     // Components\ReusableComponent\getACFLayout(),
                 ],
             ],
