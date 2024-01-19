@@ -1,0 +1,24 @@
+[name="BlockFullImageBackground"] {
+  > div {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    @media screen and (min-width: 768px) {
+      flex-direction: row;
+    }
+  }
+  .content {
+    padding: 80px;
+    color: white;
+    position: relative;
+
+    @media screen and (min-width: 768px) {
+      flex-direction: row;
+      flex: 0 0 50%;
+      &.content-right {
+        margin-left: auto;
+      }
+    }
+  }
+}
