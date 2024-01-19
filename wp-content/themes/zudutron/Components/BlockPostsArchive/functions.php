@@ -33,6 +33,22 @@ add_filter('Flynt/addComponentData?name=BlockPostsArchive', function ($data) {
 
     if (isset($data['postTypeSelect'])) {
         $postType = $data['postTypeSelect'];
+
+        // if (isset($data['postTermSelect'])) {
+        //     if ($data['postTermSelect'] != 'all') {                
+        //         $term = get_term($data['postTermSelect']);    
+        //         var_dump($data['postTermSelect']);         
+        //         $termQuery = [
+        //             'taxonomy' => $term->taxonomy,
+        //             'field' => 'id',
+        //             'terms' => $term->term_id, // Where term_id of Term 1 is "1".
+        //         ];
+        //     } else {
+                
+        //         $termQuery = '';
+        //     }
+        // }
+
         $queriedObject = Timber::get_posts([
             'post_status' => 'publish',
             'post_type' => $postType,
@@ -42,6 +58,7 @@ add_filter('Flynt/addComponentData?name=BlockPostsArchive', function ($data) {
             'paged' => $paged,
             'orderby' => $orderby,
             'order' => $order,
+            // 'tax_query' => [$termQuery],
         ]);
         $data['posts'] = $queriedObject;
     } else {
@@ -69,9 +86,10 @@ add_filter('Flynt/addComponentData?name=BlockPostsArchive', function ($data) {
     }
 
     foreach ($result as $key => $value) {
-        
         if (count($value) > 1) {
-            $data['taxs'][$key] = array_map(function ($term) use ($queriedObject) {
+            $data['taxs'][$key] = array_map(function ($term) use (
+                $queriedObject
+            ) {
                 $timberTerm = Timber::get_term($term);
                 if ($queriedObject && isset($queriedObject->taxonomy)) {
                     $timberTerm->isActive =
@@ -79,7 +97,8 @@ add_filter('Flynt/addComponentData?name=BlockPostsArchive', function ($data) {
                         $queriedObject->term_id === $term->term_id;
                 }
                 return $timberTerm;
-            }, $value);
+            },
+            $value);
             // Add item for all posts
             array_unshift($data['taxs'][$key], [
                 'link' => get_post_type_archive_link($postType),
@@ -88,8 +107,6 @@ add_filter('Flynt/addComponentData?name=BlockPostsArchive', function ($data) {
             ]);
         }
     }
-    
-    
 
     $data['taxonomy'] = $taxonomy;
 
@@ -145,6 +162,15 @@ function getACFLayout()
                     'width' => '50',
                 ],
             ],
+            // [
+            //     'label' => __('Post Taxonomy', 'flynt'),
+            //     'name' => 'postTermSelect',
+            //     'type' => 'select',
+            //     // Populated dynamically in ../../inc/populateFields.php
+            //     'wrapper' => [
+            //         'width' => '50',
+            //     ],
+            // ],
             [
                 'label' => __('Post Shape', 'flynt'),
                 'name' => 'postShape',

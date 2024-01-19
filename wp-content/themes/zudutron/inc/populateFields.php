@@ -20,16 +20,20 @@ function acf_load_post_types($field)
 }
 
 // //  Populate Taxnonomies in the options.
-// //  the key used here is the field's name attribute generated and used in the DOM, in this case: name="acf[field_global_TaxonomyOptions_taxFilters]"
-// add_filter('acf/load_field/key=field_global_TaxonomyOptions_taxFilters', 'acf_load_taxonomies');
+//  the key used here is the field's name attribute generated and used in the DOM, in this case: name="acf[field_global_TaxonomyOptions_taxFilters]"
+// add_filter('acf/load_field/key=field_pageComponents_pageComponents_BlockPostsArchive_postTermSelect', 'acf_load_taxonomies');
 // function acf_load_taxonomies($field)
 // {
-//     foreach ( get_taxonomies(null, 'objects') as $tax) {
-//         $disallowed = ['Themes','Formats','Navigation Menus','Link Categories',];
-//         if (!in_array($tax->label, $disallowed)){
-//             $field['choices'][$tax->name] = $tax->label;
-//         }     
+//     $field['choices']['all'] = 'All'; 
+//     foreach ( get_terms(null, 'objects') as $term) {
+//         // var_dump($term->name);
+//         $disallowed = ['Primary Extras Menu','Primary Menu'];
+//         if (!in_array($term->name, $disallowed)){
+//             $field['choices'][$term->term_id] = $term->name;
+//         }  
+          
 //     }
+    
 //     // return the field
 //     return $field;
 // }

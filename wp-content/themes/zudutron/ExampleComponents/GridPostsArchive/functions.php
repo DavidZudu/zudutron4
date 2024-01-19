@@ -114,6 +114,15 @@ function getACFLayout()
                 ],
             ],
             [
+                'label' => __('Post Taxonomy', 'flynt'),
+                'name' => 'postTaxSelect',
+                'type' => 'select',
+                // Populated dynamically in ../../inc/populateFields.php
+                'wrapper' => [
+                    'width' => '50',
+                ],
+            ],
+            [
                 'label' => __('Options', 'flynt'),
                 'name' => 'optionsTab',
                 'type' => 'tab',
