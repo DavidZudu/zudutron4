@@ -17,15 +17,21 @@ add_filter('Flynt/addComponentData?name=BlockPostsArchive', function ($data) {
     $terms = get_terms([
         'taxonomy' => $taxonomy,
         'hide_empty' => true,
-    ]);   
+    ]);
 
-    $ppp = get_option( 'posts_per_page' ) ? get_option( 'posts_per_page' ) : 12;    
-    $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-    $skip = isset($data['options']['skipPosts']) ? $data['options']['skipPosts'] : 0;
-    $orderby = isset($data['options']['orderBy']) ? $data['options']['orderBy'] : 'date';
-    $order = isset($data['options']['order']) ? $data['options']['order'] : 'DESC';  
-    
-    if (isset($data['postTypeSelect'])){
+    $ppp = get_option('posts_per_page') ? get_option('posts_per_page') : 12;
+    $paged = get_query_var('paged') ? get_query_var('paged') : 1;
+    $skip = isset($data['options']['skipPosts'])
+        ? $data['options']['skipPosts']
+        : 0;
+    $orderby = isset($data['options']['orderBy'])
+        ? $data['options']['orderBy']
+        : 'date';
+    $order = isset($data['options']['order'])
+        ? $data['options']['order']
+        : 'DESC';
+
+    if (isset($data['postTypeSelect'])) {
         $postType = $data['postTypeSelect'];
         $queriedObject = Timber::get_posts([
             'post_status' => 'publish',
@@ -33,29 +39,57 @@ add_filter('Flynt/addComponentData?name=BlockPostsArchive', function ($data) {
             'posts_per_page' => $ppp,
             'ignore_sticky_posts' => 1,
             // 'offset' => $skip,
-            'paged' => $paged,  
-            'orderby'          => $orderby,
-            'order'            => $order,      
-        ]); 
+            'paged' => $paged,
+            'orderby' => $orderby,
+            'order' => $order,
+        ]);
         $data['posts'] = $queriedObject;
     } else {
-        $queriedObject = get_queried_object(); 
-        $postType = get_taxonomy(get_queried_object()->taxonomy)->object_type[0]; 
-    }        
+        $queriedObject = get_queried_object();
+        $postType = get_taxonomy(get_queried_object()->taxonomy)
+            ->object_type[0];
+    }
 
-    if ($postType == 'post'){
+    if ($postType == 'post') {
         $taxonomy = 'category';
     } else {
-        
         $postTypeObj = get_post_type_object($postType);
-        $taxonomy = $postTypeObj->taxonomies[0];
+        // for just the first tax, use taxonomies[0];
+        $taxonomy = $postTypeObj->taxonomies;
     }
     $terms = get_terms([
         'taxonomy' => $taxonomy,
         'hide_empty' => true,
-        'orderby'    => 'count',
-        'order'      => 'DESC'
+        'orderby' => 'count',
+        'order' => 'DESC',
     ]);
+
+    foreach ($terms as $key => $value) {
+        $result[$value->taxonomy][] = $value;
+    }
+
+    foreach ($result as $key => $value) {
+        
+        if (count($value) > 1) {
+            $data['taxs'][$key] = array_map(function ($term) use ($queriedObject) {
+                $timberTerm = Timber::get_term($term);
+                if ($queriedObject && isset($queriedObject->taxonomy)) {
+                    $timberTerm->isActive =
+                        $queriedObject->taxonomy === $term->taxonomy &&
+                        $queriedObject->term_id === $term->term_id;
+                }
+                return $timberTerm;
+            }, $value);
+            // Add item for all posts
+            array_unshift($data['taxs'][$key], [
+                'link' => get_post_type_archive_link($postType),
+                'title' => $data['labels']['allPosts'],
+                'isActive' => is_home() || is_post_type_archive($postType),
+            ]);
+        }
+    }
+    
+    
 
     $data['taxonomy'] = $taxonomy;
 
@@ -64,7 +98,9 @@ add_filter('Flynt/addComponentData?name=BlockPostsArchive', function ($data) {
         $data['terms'] = array_map(function ($term) use ($queriedObject) {
             $timberTerm = Timber::get_term($term);
             if ($queriedObject && isset($queriedObject->taxonomy)) {
-                $timberTerm->isActive = $queriedObject->taxonomy === $term->taxonomy && $queriedObject->term_id === $term->term_id;
+                $timberTerm->isActive =
+                    $queriedObject->taxonomy === $term->taxonomy &&
+                    $queriedObject->term_id === $term->term_id;
             }
             return $timberTerm;
         }, $terms);
@@ -80,10 +116,9 @@ add_filter('Flynt/addComponentData?name=BlockPostsArchive', function ($data) {
         $data['isHome'] = true;
         $data['title'] = $queriedObject->post_title ?? get_bloginfo('name');
     } else {
-        $data['title'] =  get_the_archive_title();
+        $data['title'] = get_the_archive_title();
         $data['description'] = get_the_archive_description();
     }
-
 
     return $data;
 });
@@ -100,7 +135,7 @@ function getACFLayout()
                 'type' => 'tab',
                 'placement' => 'top',
                 'endpoint' => 0,
-            ],  
+            ],
             [
                 'label' => __('Post Type', 'flynt'),
                 'name' => 'postTypeSelect',
@@ -108,8 +143,8 @@ function getACFLayout()
                 // Populated dynamically in ../../inc/populateFields.php
                 'wrapper' => [
                     'width' => '50',
-                ],  
-            ], 
+                ],
+            ],
             [
                 'label' => __('Post Shape', 'flynt'),
                 'name' => 'postShape',
@@ -122,14 +157,14 @@ function getACFLayout()
                 'wrapper' => [
                     'width' => '50',
                 ],
-            ],      
-                 
+            ],
+
             [
                 'label' => __('Options', 'flynt'),
                 'name' => 'optionsTab',
                 'type' => 'tab',
                 'placement' => 'top',
-                'endpoint' => 0
+                'endpoint' => 0,
             ],
             [
                 'label' => '',
@@ -143,15 +178,15 @@ function getACFLayout()
                         'name' => 'maxColumns',
                         'type' => 'select',
                         'choices' => [
-                            'one'=>'one',
-                            'two'=>'two',
-                            'three'=>'three'
+                            'one' => 'one',
+                            'two' => 'two',
+                            'three' => 'three',
                         ],
                         'default_value' => 'two',
                         'wrapper' => [
                             'width' => '50',
-                        ],  
-                    ],  
+                        ],
+                    ],
                     // [
                     //     'label' => __('Skip Posts', 'flynt'),
                     //     'name' => 'skipPosts',
@@ -159,16 +194,16 @@ function getACFLayout()
                     //     'default_value' => '0',
                     //     'wrapper' => [
                     //         'width' => '33',
-                    //     ],  
-                    // ], 
+                    //     ],
+                    // ],
                     [
                         'label' => __('Live Filters?', 'flynt'),
                         'name' => 'liveFilters',
                         'type' => 'true_false',
                         'wrapper' => [
                             'width' => '33',
-                        ],  
-                    ], 
+                        ],
+                    ],
                     [
                         'label' => __('Order By...', 'flynt'),
                         'name' => 'orderBy',
@@ -181,7 +216,7 @@ function getACFLayout()
                         'default_value' => 'date',
                         'wrapper' => [
                             'width' => '50',
-                        ],  
+                        ],
                     ],
                     [
                         'label' => __('Order', 'flynt'),
@@ -195,14 +230,13 @@ function getACFLayout()
                         'default_value' => 'DESC',
                         'wrapper' => [
                             'width' => '50',
-                        ],  
+                        ],
                     ],
-                ]
-            ]
-        ]
+                ],
+            ],
+        ],
     ];
 }
-
 
 Options::addGlobal('BlockPostsArchive', [
     [
@@ -210,22 +244,20 @@ Options::addGlobal('BlockPostsArchive', [
         'name' => 'loadMore',
         'type' => 'true_false',
         'default_value' => 0,
-        'ui' => 1
+        'ui' => 1,
     ],
     [
         'label' => __('Default Max Columns', 'flynt'),
         'name' => 'defaultMaxColumns',
         'type' => 'select',
-        'choices' => [
-            1,2,3
-        ],         
-    ], 
+        'choices' => [1, 2, 3],
+    ],
     [
         'label' => __('Labels', 'flynt'),
         'name' => 'labelsTab',
         'type' => 'tab',
         'placement' => 'top',
-        'endpoint' => 0
+        'endpoint' => 0,
     ],
     [
         'label' => '',
@@ -297,21 +329,19 @@ Options::addGlobal('BlockPostsArchive', [
                 'name' => 'optionsTab',
                 'type' => 'tab',
                 'placement' => 'top',
-                'endpoint' => 0
+                'endpoint' => 0,
             ],
             [
                 'label' => '',
                 'name' => 'options',
                 'type' => 'group',
                 'layout' => 'row',
-                'sub_fields' => [
-                    FieldVariables\setContainerSize()
-                ]
+                'sub_fields' => [FieldVariables\setContainerSize()],
             ],
         ],
     ],
 ]);
 
-// Options::addTranslatable('BlockPostsArchive', [  
-    
+// Options::addTranslatable('BlockPostsArchive', [
+
 // ]);

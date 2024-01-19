@@ -9,11 +9,21 @@
   
      <span class=""><i class="fas fa-tags mr8"></i><strong>:</strong></span>
      
-        {% for term in terms %}          
+        {% for tax in taxs %}
+        <div>
+          {% for term in tax %}  
+          <a href="{{ term.link }}" data-filter="{{ term.title == "All" ? '*'}} {{term.taxonomy == taxonomy ? function('sanitize_title',term.title)}}" class="filter {{ term.isActive ? 'active' }}"  {{ term.isActive and not options.liveFilters ? 'disabled' }}>
+             {{ term.title }}
+            </a>   
+          {% endfor %}
+          </div>
+        {% endfor %}
+
+        {# {% for term in terms %}          
             <a href="{{ term.link }}" data-filter="{{ term.title == "All" ? '*'}} {{term.taxonomy == taxonomy ? function('sanitize_title',term.title)}}" class="filter {{ term.isActive ? 'active' }}"  {{ term.isActive and not options.liveFilters ? 'disabled' }}>
              {{ term.title }}
             </a>          
-        {% endfor %}
+        {% endfor %} #}
       </div>
       </div>
     {% endif %}
