@@ -1,10 +1,10 @@
 <?php
 
-namespace Flynt\Components\BlockWysiwyg;
+namespace Flynt\Components\BlockPageNav;
 
 use Flynt\FieldVariables;
 
-add_filter('Flynt/addComponentData?name=BlockWysiwyg', function ($data) {
+add_filter('Flynt/addComponentData?name=BlockPageNav', function ($data) {
     if (isset($data['options']['sectionAnchor'])) {
         $data['options']['sectionAnchorLabel'] = $data['options']['sectionAnchor'];
         $data['options']['sectionAnchor'] = preg_replace('/[^A-Za-z0-9]/', '-', strtolower($data['options']['sectionAnchor']));
@@ -18,8 +18,8 @@ add_filter('Flynt/addComponentData?name=BlockWysiwyg', function ($data) {
 function getACFLayout()
 {
     return [
-        'name' => 'blockWysiwyg',
-        'label' => __('Block: Wysiwyg', 'flynt'),
+        'name' => 'blockPageNav',
+        'label' => __('Block: Page Nav', 'flynt'),
         'sub_fields' => [
             [
                 'label' => __('Content', 'flynt'),
@@ -29,14 +29,7 @@ function getACFLayout()
                 'endpoint' => 0,
             ],
             // FieldVariables\setIntro(),
-            [
-                'label' => __('Wysiwyg Content', 'flynt'),
-                'name' => 'contentHtml',
-                'type' => 'wysiwyg',
-                'delay' => 0,
-                'media_upload' => 1,
-                
-            ],
+           
             [
                 'label' => __('Options', 'flynt'),
                 'name' => 'optionsTab',
@@ -55,7 +48,7 @@ function getACFLayout()
                     FieldVariables\setPadding(),
                     FieldVariables\setPaddingSize(),
                     // FieldVariables\setBackgroundPattern(),
-                    FieldVariables\setAnchor()
+                    // FieldVariables\setAnchor()
                 ]
             ]
         ]

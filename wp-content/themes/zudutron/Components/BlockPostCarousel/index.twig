@@ -1,4 +1,4 @@
- <flynt-component name="BlockPostCarousel" {{options.sectionAnchor ? 'id="'~ options.sectionAnchor ~'"'}}  class="{{options.backgroundColor}} {{options.paddingSize}} {{fn('disablePadding',options.padding)}}">
+ <flynt-component name="BlockPostCarousel" {{options.sectionAnchor ? 'id="'~ options.sectionAnchor ~'"'}} {{options.sectionAnchorLabel ? 'data-label="'~ options.sectionAnchorLabel ~'"'}}  class="{{options.backgroundColor}} {{options.paddingSize}} {{fn('disablePadding',options.padding)}}">
   {{fn('getBackgroundPattern',options.backgroundPattern)}}
   <div class="{{ options.containerSize }}">
     <div class="posts">

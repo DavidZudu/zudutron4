@@ -1,4 +1,4 @@
- <flynt-component name="BlockFullImageBackground" {{options.sectionAnchor ? 'id="'~ options.sectionAnchor ~'"'}}  class="{{options.backgroundColor}} {{options.paddingSize}} {{fn('disablePadding',options.padding)}}">
+ <flynt-component name="BlockFullImageBackground" {{options.sectionAnchor ? 'id="'~ options.sectionAnchor ~'"'}} {{options.sectionAnchorLabel ? 'data-label="'~ options.sectionAnchorLabel ~'"'}}  class="{{options.backgroundColor}} {{options.paddingSize}} {{fn('disablePadding',options.padding)}}">
   <div class="{{options.containerSize}}">    
     <img loading="lazy"
     class="img-bg-center-cover hero-bg"

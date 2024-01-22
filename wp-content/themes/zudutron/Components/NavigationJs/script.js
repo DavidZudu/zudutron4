@@ -8,11 +8,11 @@ let target
 document.addEventListener('click', function (e) {
   // MOBILE NAV TOGGLE
   if (e.target && (e.target.closest('.nav-toggle') || e.target.closest('.close'))) {
-    console.log("navtoggled")
+    // console.log("navtoggled")
     toggleNav()
   }
   if (e.target && !e.target.closest('[name="NavigationJs"]') && mainLinks.classList.contains('open-nav')) {
-    console.log("notnav clicked")
+    // console.log("notnav clicked")
     closeNav()
   }
 
@@ -35,7 +35,7 @@ document.addEventListener('click', function (e) {
 // DESKTOP NAV DROPDOWN MOUSE OVER
 dropdowns.forEach((el) => {
   el.addEventListener('mouseover', function (e) {
-    console.log(el);
+    // console.log(el);
     if (window.matchMedia('(min-width: 768px)').matches) {
       dropdowns.forEach((el) => {
         const sub = el.querySelector('.sub-menu')

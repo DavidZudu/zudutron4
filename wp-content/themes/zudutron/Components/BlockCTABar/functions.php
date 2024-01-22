@@ -6,6 +6,7 @@ use Flynt\FieldVariables;
 
 add_filter('Flynt/addComponentData?name=BlockCTABar', function ($data) {
     if (isset($data['options']['sectionAnchor'])) {
+        $data['options']['sectionAnchorLabel'] = $data['options']['sectionAnchor'];
         $data['options']['sectionAnchor'] = preg_replace('/[^A-Za-z0-9]/', '-', strtolower($data['options']['sectionAnchor']));
     }
 
