@@ -1,0 +1,9 @@
+<flynt-component name="BlockTitleBar" {{options.sectionAnchor ? 'id="'~ options.sectionAnchor ~'"'}}  class="{{options.backgroundColor}} {{options.paddingSize}} {{fn('disablePadding',options.padding)}}">
+  {{fn('getBackgroundPattern',options.backgroundPattern)}}
+  <div class="{{options.containerSize}}">
+    <div class="content" >
+      <h2>{{titleText}}</h2>
+      <hr>
+    </div>
+  </div>
+</flynt-component>
