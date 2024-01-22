@@ -1,5 +1,6 @@
 import 'vite/modulepreload-polyfill'
 import FlyntComponent from './scripts/FlyntComponent'
+import './scripts/swiper'
 
 import 'lazysizes'
 

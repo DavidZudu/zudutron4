@@ -1,0 +1,52 @@
+ <flynt-component name="BlockPostCarousel" {{options.sectionAnchor ? 'id="'~ options.sectionAnchor ~'"'}}  class="{{options.backgroundColor}} {{options.paddingSize}} {{fn('disablePadding',options.padding)}}">
+  {{fn('getBackgroundPattern',options.backgroundPattern)}}
+  <div class="{{ options.containerSize }}">
+    <div class="posts">
+    <!-- Slider main container -->
+    <div class="posts-swiper" data-columns="{{options.maxColumns}}">
+      <!-- Additional required wrapper -->
+      <div class="swiper-wrapper">
+      {% for post in posts %}
+        {% set taxs = function('getTaxAndTerms',post) %} 
+
+        <article class="post swiper-slide" data-cat="{% for term in post.terms %}{{term.taxonomy == taxonomy ? function('sanitize_title',term.name)}} {% endfor %}">
+          <a class="image" href="{{ post.link }}">
+            {% if post.thumbnail %}
+                <img loading="lazy"
+                class="img-bg-center-cover"
+                src="{{ post.thumbnail.src }}"
+                sizes="(max-width: 768px) 100vw, 780px"
+                srcset="{{ post.thumbnail.srcset }}"
+                alt="{{ post.thumbnail.alt }}" />
+            {% endif %}
+          </a>
+          <div class="content"> 
+          {% for term in taxs[0].terms %}
+          {% set link = function('get_term_link',term) %} 
+            <a href="{{ link }}">{{term.name}}</a>
+          {% endfor %}            
+            <h2 class="h3 title">
+              <a class="" href="{{ post.link }}" title="{{ post.title }}" aria-hidden="true" tabindex="-1">{{post.title}}</a>
+            </h2>
+            <p class="excerpt">{{ post.excerpt.read_more(false) }}</p>
+            <a class="" href="{{ post.link }}" title="{{ post.title }}" aria-hidden="true" tabindex="-1">
+              {{ labels.readMore }}
+            </a>
+          </div>
+        </article>
+
+      {% endfor %}
+      </div>
+      <!-- If we need pagination -->
+      <div class="swiper-pagination"></div>
+      <!-- If we need navigation buttons -->
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+      <!-- If we need scrollbar -->
+      <div class="swiper-scrollbar"></div>
+    </div>         
+  </div>
+</flynt-component>
+
+   
+  

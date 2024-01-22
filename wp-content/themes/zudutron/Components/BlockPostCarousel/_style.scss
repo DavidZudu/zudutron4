@@ -1,0 +1,39 @@
+[name="BlockPostCarousel"] {
+  .posts {
+    position:relative;
+    overflow:hidden;
+    .post {
+      // width:calc(100% - 40px);
+      // &.two,&.three,&.four {
+      //   width:calc(50% - 40px);
+      // }
+      // @media screen and (min-width:768px) {
+      //   &.three,&.four {
+      //     width:calc(33.33% - 40px);
+      //   }
+      // }
+      // @media screen and (min-width:992px) {
+      //  &.four {
+      //     width:calc(25% - 40px);
+      //   }
+      // }
+
+      .image {
+        position: relative;
+        display: block;
+        padding-bottom: 56.25%;
+        overflow: hidden;
+        margin-bottom: 20px;
+      }
+      .excerpt {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* number of lines to show */
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+    }
+  }
+  
+}

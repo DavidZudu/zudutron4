@@ -23,6 +23,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                     Components\BlockFullImageBackground\getACFLayout(),
                     Components\BlockPostsArchive\getACFLayout(),
                     Components\BlockTabs\getACFLayout(),
+                    Components\BlockPostCarousel\getACFLayout(),
                     // Components\ReusableComponent\getACFLayout(),
                 ],
             ],
