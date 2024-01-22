@@ -1,7 +1,7 @@
 const pageNav = document.getElementById("pageNav");
 
 if (pageNav) {
-  const idEls = document.querySelectorAll("flynt-component[id]");
+  const idEls = document.querySelectorAll(".anchor-element[id]");
   const anchorElements = [];
   idEls.forEach((el) => {
     const hashAnchor = el.id;

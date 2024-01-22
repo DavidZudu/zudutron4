@@ -1,4 +1,5 @@
- <flynt-component name="BlockSplitContent" {{options.sectionAnchor ? 'id="'~ options.sectionAnchor ~'"'}} {{options.sectionAnchorLabel ? 'data-label="'~ options.sectionAnchorLabel ~'"'}}  class="{{options.backgroundColor}} {{options.paddingSize}} {{fn('disablePadding',options.padding)}}">
+  {% if options.sectionAnchor %}<span class="anchor-element" {{options.sectionAnchor ? 'id="'~ options.sectionAnchor ~'"'}} {{options.sectionAnchorLabel ? 'data-label="'~ options.sectionAnchorLabel ~'"'}}></span>{% endif %}
+ <flynt-component name="BlockSplitContent"   class="{{options.backgroundColor}} {{options.paddingSize}} {{fn('disablePadding',options.padding)}}">
   <div class="{{options.containerSize}}">
    <article class="image {{imagePosition}}">
       <img loading="lazy"
