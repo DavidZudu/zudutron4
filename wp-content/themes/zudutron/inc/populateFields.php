@@ -19,24 +19,24 @@ function acf_load_post_types($field)
     return $field;
 }
 
-// //  Populate Taxnonomies in the options.
+//  Populate Taxnonomies in the options.
 //  the key used here is the field's name attribute generated and used in the DOM, in this case: name="acf[field_global_TaxonomyOptions_taxFilters]"
-// add_filter('acf/load_field/key=field_pageComponents_pageComponents_BlockPostsArchive_postTermSelect', 'acf_load_taxonomies');
-// function acf_load_taxonomies($field)
-// {
-//     $field['choices']['all'] = 'All'; 
-//     foreach ( get_terms(null, 'objects') as $term) {
-//         // var_dump($term->name);
-//         $disallowed = ['Primary Extras Menu','Primary Menu'];
-//         if (!in_array($term->name, $disallowed)){
-//             $field['choices'][$term->term_id] = $term->name;
-//         }  
+add_filter('acf/load_field/key=field_pageComponents_pageComponents_BlockPostCarousel_postTermSelect', 'acf_load_taxonomies');
+function acf_load_taxonomies($field)
+{
+    $field['choices']['all'] = 'All'; 
+    foreach ( get_terms(null, 'objects') as $term) {
+        // var_dump($term->name);
+        $disallowed = ['Primary Extras Menu','Primary Menu'];
+        if (!in_array($term->name, $disallowed)){
+            $field['choices'][$term->term_id] = $term->name;
+        }  
           
-//     }
+    }
     
-//     // return the field
-//     return $field;
-// }
+    // return the field
+    return $field;
+}
 
 function mytest_reference_slug_output() {
     ?>
