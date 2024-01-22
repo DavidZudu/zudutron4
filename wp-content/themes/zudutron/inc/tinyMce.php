@@ -79,39 +79,14 @@ function getConfig()
         ],
         'styleformats' => [
             [
-                'title' => __('Headings', 'flynt'),
+                'title' => 'Paragraph Styles',
                 'icon' => '',
                 'items' => [
                     [
-                        'title' => __('Heading 1', 'flynt'),
-                        'classes' => 'h1',
-                        'selector' => '*'
-                    ],
-                    [
-                        'title' => __('Heading 2', 'flynt'),
-                        'classes' => 'h2',
-                        'selector' => '*'
-                    ],
-                    [
-                        'title' => __('Heading 3', 'flynt'),
-                        'classes' => 'h3',
-                        'selector' => '*'
-                    ],
-                    [
-                        'title' => __('Heading 4', 'flynt'),
-                        'classes' => 'h4',
-                        'selector' => '*'
-                    ],
-                    [
-                        'title' => __('Heading 5', 'flynt'),
-                        'classes' => 'h5',
-                        'selector' => '*'
-                    ],
-                    [
-                        'title' => __('Heading 6', 'flynt'),
-                        'classes' => 'h6',
-                        'selector' => '*'
-                    ],
+                        'title' => 'Lead Paragraph',
+                        'classes' => 'lead',
+                        'selector' => 'p'
+                    ],                   
                 ]
             ],
             [
@@ -185,3 +160,6 @@ function getConfig()
         ]
     ];
 }
+
+// add style sheet
+add_editor_style('editor-style.css' );

@@ -1,10 +1,13 @@
  <flynt-component name="BlockTabs" {{options.sectionAnchor ? 'id="'~ options.sectionAnchor ~'"'}}  class="{{options.backgroundColor}} {{options.paddingSize}} {{fn('disablePadding',options.padding)}}">
   {{fn('getBackgroundPattern',options.backgroundPattern)}}
   <div class="{{options.containerSize}}">
+  <div class="intro">
+      {{sectionIntro}}
+      </div>
     <section class="tab-section content-wrap">  
       <nav class="tab">
       {% for tab in tabs %}
-        <button class="tablinks" data-tab="{{function('sanitize_title',tab.title)}}">{{tab.title}}</button>
+        <button class="tablinks {{loop.first ? 'active'}}" data-tab="{{function('sanitize_title',tab.title)}}">{{tab.title}}</button>
       {% endfor %}        
       </nav>
       <select class="tab-select">
@@ -17,9 +20,9 @@
     
 
       {% for tab in tabs %}
-         <article id="{{function('sanitize_title',tab.title)}}" class="tabcontent active">
-        {{tab.content}}
-      </article>
+         <article id="{{function('sanitize_title',tab.title)}}" class="tabcontent {{loop.first ? 'active'}}">
+          {{tab.content}}
+        </article>
         {% endfor %}      
     </section>
   </div>
