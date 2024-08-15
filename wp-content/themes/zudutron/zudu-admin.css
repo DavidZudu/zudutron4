@@ -17,3 +17,6 @@
 .menu-item-depth-0 [data-name="ctas"] {
     display:block;
 }
+#tinymce {
+    padding:16px;
+  }

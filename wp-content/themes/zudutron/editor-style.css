@@ -2,6 +2,10 @@ body {
     /* font-family:sans-serif!important; */
 }
 
+#tinymce {
+  padding:16px;
+}
+
 .lead {
     font-size:18px;
     font-weight:bold;

@@ -46,21 +46,6 @@ add_filter( 'whitelist_options', function ( $options ) {
  * @param WP_Post $post
  */
 add_filter( 'display_post_states', function ( $states, $post ) {
-    if ( intval( get_option( 'page_for_projects' ) ) === $post->ID ) {
-        $states['page_for_projects'] = __( 'Projects Page' );
-    }
-
-    return $states;
-}, 10, 2 );
-
-/**
- * Filters the post states on the "Pages" edit page. Displays "Projects Page"
- * after the post/page title, if the current page is the Projects static page.
- *
- * @param array $states
- * @param WP_Post $post
- */
-add_filter( 'display_post_states', function ( $states, $post ) {
     if ( intval( get_option( 'page_for_articles' ) ) === $post->ID ) {
         $states['page_for_articles'] = __( 'Articles Page' );
     }
