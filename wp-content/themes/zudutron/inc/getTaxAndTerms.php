@@ -65,3 +65,5 @@ function get_taxonomies_for_post_type($post_type, $exclude_taxonomies = array())
     return $taxonomies_info;
 }
 
+
+

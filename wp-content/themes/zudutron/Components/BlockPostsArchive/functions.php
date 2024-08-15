@@ -4,29 +4,48 @@ namespace Flynt\Components\BlockPostsArchive;
 
 use Flynt\FieldVariables;
 use Flynt\Utils\Options;
-use Timber\Term;
 use Timber\Timber;
 
 const POST_TYPE = 'post';
 const FILTER_BY_TAXONOMY = 'category';
 
 add_filter('Flynt/addComponentData?name=BlockPostsArchive', function ($data) {
-    // Set default query parameters
-    $defaultPostsPerPage = 12;
-    $defaultOrderBy = 'date';
-    $defaultOrder = 'DESC';
 
-    // Determine pagination and query variables
-    $postsPerPage = get_option('posts_per_page', $defaultPostsPerPage);
-    $paged = max(1, get_query_var('paged', 1));
-    $orderBy = $data['options']['orderBy'] ?? $defaultOrderBy;
-    $order = $data['options']['order'] ?? $defaultOrder;
+    if (is_home() || is_archive() || is_single() || is_search() || is_post_type_archive()) {
 
-    // Determine the post type from data or use 'post' as fallback
-    $postType = $data['postTypeSelect'] ?? 'post';
+        global $wp_query;
 
-    // Ensure the post type is valid
-    if (post_type_exists($postType)) {
+        // Create an object from the global WP_Query
+        $query_object = (object) array(
+            'posts' => $wp_query->posts,
+            'post_count' => $wp_query->post_count,
+            'max_num_pages' => $wp_query->max_num_pages,
+            'found_posts' => $wp_query->found_posts,
+            'current_page' => $wp_query->get('paged'),
+            'query_vars' => $wp_query->query_vars,
+        );
+
+        $first_post = $query_object->posts[0];
+
+        // Get the post type
+        $postType = get_post_type($first_post);
+
+    } else {
+        // Set default query parameters
+        $defaultPostsPerPage = 12;
+        $defaultOrderBy = 'date';
+        $defaultOrder = 'DESC';
+
+        // Determine pagination and query variables
+        $postsPerPage = get_option('posts_per_page', $defaultPostsPerPage);
+        $paged = max(1, get_query_var('paged', 1));
+        $orderBy = $data['options']['orderBy'] ?? $defaultOrderBy;
+        $order = $data['options']['order'] ?? $defaultOrder;
+
+        // Determine the post type from data or use 'post' as fallback
+        $postType = $data['postTypeSelect'] ?? 'post';
+
+        // Standard post type query
         $queryArgs = [
             'post_status' => 'publish',
             'post_type' => $postType,
@@ -39,19 +58,14 @@ add_filter('Flynt/addComponentData?name=BlockPostsArchive', function ($data) {
 
         // Query the posts using Timber
         $data['posts'] = Timber::get_posts($queryArgs);
-    } else {
-        // Handle invalid post type by providing an empty array for posts
-        $data['posts'] = [];
     }
 
+    // Get taxonomies related to the post type
     $data['taxs'] = get_taxonomies_for_post_type($postType, ['post_format']);
 
     // Return the modified data array
     return $data;
 });
-
-
-
 
 function getACFLayout()
 {
