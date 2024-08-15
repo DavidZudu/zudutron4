@@ -43,7 +43,7 @@ add_action('init', function () {
         'description'           => __('Article Description', 'flynt'),
         'labels'                => $labels,
         'supports'              => ['title', 'editor', 'revisions'],
-        'taxonomies'            => ['topic', 'post_tag','subject'],
+        'taxonomies'            => ['topic','subject'],
         'hierarchical'          => false,
         'public'                => true,
         'show_ui'               => true,

@@ -11,134 +11,47 @@ const POST_TYPE = 'post';
 const FILTER_BY_TAXONOMY = 'category';
 
 add_filter('Flynt/addComponentData?name=BlockPostsArchive', function ($data) {
-    global $wp_query;
-    $postType = POST_TYPE;
-    $taxonomy = FILTER_BY_TAXONOMY;
-    $terms = get_terms([
-        'taxonomy' => $taxonomy,
-        'hide_empty' => true,
-    ]);
+    // Set default query parameters
+    $defaultPostsPerPage = 12;
+    $defaultOrderBy = 'date';
+    $defaultOrder = 'DESC';
 
-    $ppp = get_option('posts_per_page') ? get_option('posts_per_page') : 12;
-    $paged = get_query_var('paged') ? get_query_var('paged') : 1;
-    $skip = isset($data['options']['skipPosts'])
-        ? $data['options']['skipPosts']
-        : 0;
-    $orderby = isset($data['options']['orderBy'])
-        ? $data['options']['orderBy']
-        : 'date';
-    $order = isset($data['options']['order'])
-        ? $data['options']['order']
-        : 'DESC';
+    // Determine pagination and query variables
+    $postsPerPage = get_option('posts_per_page', $defaultPostsPerPage);
+    $paged = max(1, get_query_var('paged', 1));
+    $orderBy = $data['options']['orderBy'] ?? $defaultOrderBy;
+    $order = $data['options']['order'] ?? $defaultOrder;
 
-    if (isset($data['postTypeSelect'])) {
-        $postType = $data['postTypeSelect'];
+    // Determine the post type from data or use 'post' as fallback
+    $postType = $data['postTypeSelect'] ?? 'post';
 
-        // if (isset($data['postTermSelect'])) {
-        //     if ($data['postTermSelect'] != 'all') {                
-        //         $term = get_term($data['postTermSelect']);    
-        //         var_dump($data['postTermSelect']);         
-        //         $termQuery = [
-        //             'taxonomy' => $term->taxonomy,
-        //             'field' => 'id',
-        //             'terms' => $term->term_id, // Where term_id of Term 1 is "1".
-        //         ];
-        //     } else {
-                
-        //         $termQuery = '';
-        //     }
-        // }
-
-        $queriedObject = Timber::get_posts([
+    // Ensure the post type is valid
+    if (post_type_exists($postType)) {
+        $queryArgs = [
             'post_status' => 'publish',
             'post_type' => $postType,
-            'posts_per_page' => $ppp,
-            'ignore_sticky_posts' => 1,
-            // 'offset' => $skip,
+            'posts_per_page' => $postsPerPage,
             'paged' => $paged,
-            'orderby' => $orderby,
+            'orderby' => $orderBy,
             'order' => $order,
-            // 'tax_query' => [$termQuery],
-        ]);
-        $data['posts'] = $queriedObject;
+            'ignore_sticky_posts' => 1,
+        ];
+
+        // Query the posts using Timber
+        $data['posts'] = Timber::get_posts($queryArgs);
     } else {
-        $queriedObject = get_queried_object();
-        $postType = get_taxonomy(get_queried_object()->taxonomy)
-            ->object_type[0];
+        // Handle invalid post type by providing an empty array for posts
+        $data['posts'] = [];
     }
 
-    if ($postType == 'post') {
-        $taxonomy = 'category';
-    } else {
-        $postTypeObj = get_post_type_object($postType);
-        // for just the first tax, use taxonomies[0];
-        $taxonomy = $postTypeObj->taxonomies;
-    }
-    $terms = get_terms([
-        'taxonomy' => $taxonomy,
-        'hide_empty' => true,
-        'orderby' => 'count',
-        'order' => 'DESC',
-    ]);
+    $data['taxs'] = get_taxonomies_for_post_type($postType, ['post_format']);
 
-    foreach ($terms as $key => $value) {
-        $result[$value->taxonomy][] = $value;
-    }
-
-    foreach ($result as $key => $value) {
-        if (count($value) > 1) {
-            $data['taxs'][$key] = array_map(function ($term) use (
-                $queriedObject
-            ) {
-                $timberTerm = Timber::get_term($term);
-                if ($queriedObject && isset($queriedObject->taxonomy)) {
-                    $timberTerm->isActive =
-                        $queriedObject->taxonomy === $term->taxonomy &&
-                        $queriedObject->term_id === $term->term_id;
-                }
-                return $timberTerm;
-            },
-            $value);
-            // Add item for all posts
-            array_unshift($data['taxs'][$key], [
-                'link' => get_post_type_archive_link($postType),
-                'title' => $data['labels']['allPosts'],
-                'isActive' => is_home() || is_post_type_archive($postType),
-            ]);
-        }
-    }
-
-    $data['taxonomy'] = $taxonomy;
-
-    // var_dump($queriedObject);
-    if (count($terms) > 1) {
-        $data['terms'] = array_map(function ($term) use ($queriedObject) {
-            $timberTerm = Timber::get_term($term);
-            if ($queriedObject && isset($queriedObject->taxonomy)) {
-                $timberTerm->isActive =
-                    $queriedObject->taxonomy === $term->taxonomy &&
-                    $queriedObject->term_id === $term->term_id;
-            }
-            return $timberTerm;
-        }, $terms);
-        // Add item for all posts
-        array_unshift($data['terms'], [
-            'link' => get_post_type_archive_link($postType),
-            'title' => $data['labels']['allPosts'],
-            'isActive' => is_home() || is_post_type_archive($postType),
-        ]);
-    }
-
-    if (is_home()) {
-        $data['isHome'] = true;
-        $data['title'] = $queriedObject->post_title ?? get_bloginfo('name');
-    } else {
-        $data['title'] = get_the_archive_title();
-        $data['description'] = get_the_archive_description();
-    }
-
+    // Return the modified data array
     return $data;
 });
+
+
+
 
 function getACFLayout()
 {
