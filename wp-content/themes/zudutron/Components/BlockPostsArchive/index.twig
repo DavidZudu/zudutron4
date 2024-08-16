@@ -28,8 +28,10 @@
                                 {% if post.post_type != 'event' %}
                                     <span class="pill teal">{{post.date}}</span>
                                 {% endif %}
-                                {% for term in post.terms %}
-                                    {{term.taxonomy == taxonomy ? '<span class="pill">'~ term.name ~ '</span>'}}
+                                {% set taxs = function('getTaxAndTerms',post) %}
+                                {% for term in taxs[0].terms %}
+                                    {% set link = function('get_term_link',term) %}
+                                    <a href="{{ link }}">{{term.name}}</a>
                                 {% endfor %}
                             </div>
 
@@ -38,8 +40,8 @@
                             </h2>
                             {# <p class="excerpt">{{ post.preview.read_more(false) }}</p> #}
                             {# <a class="" href="{{ post.link }}" title="{{ post.title }}" aria-hidden="true" tabindex="-1">
-                                                                        {{ labels.readMore }}
-                                                                      </a> #}
+                                                                                                    {{ labels.readMore }}
+                                                                                                  </a> #}
                         </div>
                     </article>
                 {% else %}
